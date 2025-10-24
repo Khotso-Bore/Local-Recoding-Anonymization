@@ -1,0 +1,132 @@
+{
+  "workclass": {
+    "Government": ["Federal-gov", "State-gov", "Local-gov"],
+    "Self-Employed": ["Self-emp-inc", "Self-emp-not-inc"],
+    "Private Sector": ["Private"],
+    "Other": ["Without-pay"]
+  },
+  "education": {
+    "Preschool": {
+      "Preschool": {
+        "Preschool": ["Preschool"]
+      }
+    },
+    "Primary": {
+      "Lower Primary": {
+        "1st-4th": ["1st-4th"]
+      },
+      "Upper Primary": {
+        "5th-6th": ["5th-6th"]
+      }
+    },
+    "Secondary": {
+      "Junior": {
+        "9th": ["9th"],
+        "10th": ["10th"]
+      },
+      "Senior": {
+        "11th": ["11th"],
+        "12th": ["12th"],
+        "HS-grad": ["HS-grad"]
+      }
+    },
+    "Post-Secondary": {
+      "College": {
+        "Some-college": ["Some-college"],
+        "Assoc-acdm": ["Assoc-acdm"],
+        "Assoc-voc": ["Assoc-voc"]
+      },
+      "University": {
+        "Bachelor": ["Bachelors"],
+        "Graduate": ["Masters", "Doctorate", "Prof-school"]
+      }
+    }
+  },
+  "marital-status": {
+    "Married": [
+      "Married-civ-spouse",
+      "Married-spouse-absent",
+      "Married-AF-spouse"
+    ],
+    "Single": ["Never-married"],
+    "Divorced/Separated/Widowed": ["Divorced", "Separated", "Widowed"]
+  },
+  "occupation": {
+    "Management & Administration": ["Exec-managerial", "Adm-clerical"],
+    "Professional / Technical": [
+      "Prof-specialty",
+      "Tech-support",
+      "Protective-serv"
+    ],
+    "Sales & Service": ["Sales", "Other-service", "Priv-house-serv"],
+    "Labor / Manual": [
+      "Handlers-cleaners",
+      "Machine-op-inspct",
+      "Craft-repair",
+      "Farming-fishing",
+      "Transport-moving"
+    ],
+    "Military": ["Armed-Forces"]
+  },
+  "relationship": {
+    "Family": ["Husband", "Wife", "Own-child", "Other-relative"],
+    "Non-Family": ["Not-in-family", "Unmarried"]
+  },
+  "race": [
+    "White",
+    "Black",
+    "Asian-Pac-Islander",
+    "Amer-Indian-Eskimo",
+    "Other"
+  ],
+  "sex": ["Male", "Female"],
+  "native-country": {
+    "North America": [
+      "United-States",
+      "Canada",
+      "Mexico",
+      "Puerto-Rico",
+      "Outlying-US(Guam-USVI-etc)",
+      "Honduras"
+    ],
+    "Central & South America": [
+      "Cuba",
+      "Jamaica",
+      "Columbia",
+      "Ecuador",
+      "El-Salvador",
+      "Guatemala",
+      "Haiti",
+      "Nicaragua",
+      "Peru",
+      "Trinadad&Tobago"
+    ],
+    "Europe": [
+      "England",
+      "France",
+      "Germany",
+      "Greece",
+      "Hungary",
+      "Ireland",
+      "Italy",
+      "Poland",
+      "Portugal",
+      "Scotland",
+      "Yugoslavia",
+      "Holand-Netherlands"
+    ],
+    "Asia": [
+      "India",
+      "Iran",
+      "China",
+      "Japan",
+      "Taiwan",
+      "Thailand",
+      "Cambodia",
+      "Laos",
+      "Vietnam",
+      "Hong",
+      "South"
+    ]
+  }
+}
