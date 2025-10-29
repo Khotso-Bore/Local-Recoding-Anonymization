@@ -17,6 +17,9 @@
       },
       "Upper Primary": {
         "5th-6th": ["5th-6th"]
+      },
+      "Lower High": {
+        "7th-8th": ["7th-8th"]
       }
     },
     "Secondary": {
@@ -99,7 +102,8 @@
       "Haiti",
       "Nicaragua",
       "Peru",
-      "Trinadad&Tobago"
+      "Trinadad&Tobago",
+      "Dominican-Republic"
     ],
     "Europe": [
       "England",
@@ -126,7 +130,8 @@
       "Laos",
       "Vietnam",
       "Hong",
-      "South"
+      "South",
+      "Philippines"
     ]
   }
 }
