@@ -48,7 +48,7 @@
 %
 % and set <dim> to something 5cm or larger.
 
-\title{SUBWORD-AWARE NEURAL CLASSIFICATION OF SENTIMENT FOR THE SESOTHO LANGUAGE}
+\title{Local Recoding Anonymization for Privacy Preservation}
 
 
 % Author block
@@ -63,14 +63,14 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-Neural language models have become central to many NLP tasks like translation and sentiment analysis. To deal with rare or unknown words, these models often break words into smaller parts — a process known as subword tokenization. While this helps in many cases, it can cause problems when applied to African languages like Sesotho and Setswana, where word structure is more complex. In these languages, subword tokenization may lose important meaning, making it harder to understand what’s really being said. Our project explores how this affects sentiment classification. We build a neural model that works with subword tokens and uses STF-IDF to classify text at the word level. We then compare its performance to traditional models like linear regression, as well as pre-trained multilingual models. By doing this, we aim to find out which approaches work best for handling sentiment in low-resource African languages — and how to reduce the loss of meaning along the way.
+    Neural language models have become central to many NLP tasks like translation and sentiment analysis. To deal with rare or unknown words, these models often break words into smaller parts — a process known as subword tokenization. While this helps in many cases, it can cause problems when applied to African languages like Sesotho and Setswana, where word structure is more complex. In these languages, subword tokenization may lose important meaning, making it harder to understand what’s really being said. Our project explores how this affects sentiment classification. We build a neural model that works with subword tokens and uses STF-IDF to classify text at the word level. We then compare its performance to traditional models like linear regression, as well as pre-trained multilingual models. By doing this, we aim to find out which approaches work best for handling sentiment in low-resource African languages — and how to reduce the loss of meaning along the way.
 \end{abstract}
 
 \section{Introduction}
 
 In recent years, neural language models have become the cornerstone of Natural Language Processing (NLP), enabling advances in tasks such as machine translation, sentiment analysis, and information retrieval \cite{mielke2021between}\cite{mesham_low-resource_2021} Central to many of these models is the technique of subword-tokenization, which breaks down words into smaller units to handle rare or unseen terms. However, this technique presents challenges when applied to African languages\cite{buys2021low}. Subword-tokenization can distort meaning and lead to semantic loss, hindering the performance of NLP systems for these languages.
 
-This research addresses the limitations of subword tokenization in neural language models, particularly in the context of sentiment classification for low-resource African languages like Sesotho and Setswana. These languages are underrepresented in both annotated datasets and in the design of existing pre-trained models. 
+This research addresses the limitations of subword tokenization in neural language models, particularly in the context of sentiment classification for low-resource African languages like Sesotho and Setswana. These languages are underrepresented in both annotated datasets and in the design of existing pre-trained models.
 
 Our objective is to develop a neural model that utilizes subword tokenization for input but performs classification at the word level. By integrating subword-aware embeddings with traditional techniques such as TF-IDF, and comparing our model's performance with pre-trained multilingual models, we aim to demonstrate more effective sentiment classification for African languages.
 
@@ -80,13 +80,13 @@ Our work directly addresses the issue of under representation in NLP. African la
 Natural Language Processing (NLP) for African languages is gaining momentum, yet remains under-resourced compared to high-resource languages. Recent work has introduced new datasets and modeling techniques, but significant limitations still occur. For instance, the SAfriSenti corpus was developed to support sentiment analysis across several South African languages (e.g. Setswana, Sesotho, Sepedi, isiXhosa, and isiZulu)\cite{SAfriSentiCorpus}, highlighting the effectiveness of multilingual pre-trained language models such as AfroXLMR and AfriBERTa when fine-tuned on related languages \cite{mabokela2024advancing}.
 Tokenization strategies have also been evaluated in the context of machine translation. Rajab (2022) compared subword BPE approaches and demonstrated that tokenization quality directly impacts model performance on African languages such as Setswana and isiZulu. SentencePiece tokenization showed improved BLEU scores due to its language-agnostic encoding, which better accommodates the agglutinative structure common in African languages \cite{rajab2022effect}.
 Despite these advancements, major gaps remain. Even well-known models like mBERT and XLM-R have limited coverage and training data for African languages\cite{DavlanAfroXLMR}. Moreover, many datasets, such as SAfriSenti, while useful, rely heavily on social media content and may not capture the full linguistic richness of African languages.
-Prior research in African NLP has quite a huge difference, but a large gap still exists. Tokenization algorithms, pretrained models, and sentiment datasets often assume linguistic features aligned with European languages. This results in reduced effectiveness for languages such as Setswana and Sesotho. Existing datasets are limited in size and linguistic variation, often made from narrow domains like Twitter, which can introduce bias and restrict generalizability \cite{huang2020multilingual}. 
+Prior research in African NLP has quite a huge difference, but a large gap still exists. Tokenization algorithms, pretrained models, and sentiment datasets often assume linguistic features aligned with European languages. This results in reduced effectiveness for languages such as Setswana and Sesotho. Existing datasets are limited in size and linguistic variation, often made from narrow domains like Twitter, which can introduce bias and restrict generalizability \cite{huang2020multilingual}.
 
 \section{Methodology}
 
-As previously mentioned, the aim of our study is exploring how effective subword-aware neural language models are, specifically for AfroXLMR\cite{DavlanAfroXLMR} in sentiment analysis with deep focus on African languages that are considered low-resource.With another goal of providing meaningful evaluation, we compared the performance of AfroXLMR with traditional classification models of which include TF-IDF with logistic regression, and a custom subword TF-IDF(STF-IDF) model. 
+As previously mentioned, the aim of our study is exploring how effective subword-aware neural language models are, specifically for AfroXLMR\cite{DavlanAfroXLMR} in sentiment analysis with deep focus on African languages that are considered low-resource.With another goal of providing meaningful evaluation, we compared the performance of AfroXLMR with traditional classification models of which include TF-IDF with logistic regression, and a custom subword TF-IDF(STF-IDF) model.
 
-Our methodology is structured in the following manner: 
+Our methodology is structured in the following manner:
 Data selection, Preprocessing, Feature engineering, model training, and Evaluation.
 
 
@@ -94,157 +94,157 @@ To elaborate further on the processes:
 
 \begin{enumerate}
     \item Dataset Collection and Selection
-    
 
-    We used the two prescribed datasets as our main sources of data:
-    \begin{itemize}
-        \item Sesotho subset of the SAfriSenti Corpus. It contained sentiment labeled tweets.\footnote{However, it has recently been removed from Github.}
-        \item Sesotho news headlines dataset, locally compiled. This dataset was stored in a custom format, unlabeled consisting of sentences as well as the sentiment integers.
-    \end{itemize}
 
-    Choosing the SAfriSenti dataset was influenced by the fact that it was curated  just for sentiment analysis as depicted in its format as well as the contents. It provides content that is user generated in real world. It is also inherently noisy, informal and short, which are characteristics that tend to pose a challenge on standard nlp techniques. However, these are also good characteristics providing an ideal test environment for subword based models with a focus on handling out-of-vocabulary(OOV) terms and spelling variations. The Sesotho news headlines dataset provides a more formal domain complementing the informal tweets dataset, which allows us to evaluate domain robustness of our model. 
+          We used the two prescribed datasets as our main sources of data:
+          \begin{itemize}
+              \item Sesotho subset of the SAfriSenti Corpus. It contained sentiment labeled tweets.\footnote{However, it has recently been removed from Github.}
+              \item Sesotho news headlines dataset, locally compiled. This dataset was stored in a custom format, unlabeled consisting of sentences as well as the sentiment integers.
+          \end{itemize}
 
-    We have selected the Sesotho language because it has proven to be less covered in the mainstream multi lingual sentiment dataset, thus making it an ideal case for cross lingual transfer learning.
+          Choosing the SAfriSenti dataset was influenced by the fact that it was curated  just for sentiment analysis as depicted in its format as well as the contents. It provides content that is user generated in real world. It is also inherently noisy, informal and short, which are characteristics that tend to pose a challenge on standard nlp techniques. However, these are also good characteristics providing an ideal test environment for subword based models with a focus on handling out-of-vocabulary(OOV) terms and spelling variations. The Sesotho news headlines dataset provides a more formal domain complementing the informal tweets dataset, which allows us to evaluate domain robustness of our model.
 
-    
+          We have selected the Sesotho language because it has proven to be less covered in the mainstream multi lingual sentiment dataset, thus making it an ideal case for cross lingual transfer learning.
+
+
 
     \item Preprocessing
-    
-    
-    Preprocessing a dataset is a critical step for both neural and classical approaches to this study. For the traditional aspect, we used a rule-based cleaning approach. This includes the following operations:
 
-    \begin{itemize}
-        \item User Mentions: The SAfrisenti tweet had "@user" texts which made sense considering they are tweets but they were unnecessary as per the work and goals we wanted to achieve, thus they had to be removed, as well as any existing URLs as they carry little semantic value and aid with noise. 
 
-        \item Hashtags: punctuations and numbers were eliminated promoting focus on the linguistic content of the sentence.
+          Preprocessing a dataset is a critical step for both neural and classical approaches to this study. For the traditional aspect, we used a rule-based cleaning approach. This includes the following operations:
 
-        \item Lowercasing: For standardization.
+          \begin{itemize}
+              \item User Mentions: The SAfrisenti tweet had "@user" texts which made sense considering they are tweets but they were unnecessary as per the work and goals we wanted to achieve, thus they had to be removed, as well as any existing URLs as they carry little semantic value and aid with noise.
 
-        \item Emoji and emoticons: Emojis are not consistently tokenized across models, thus done through stripping unicodes.
+              \item Hashtags: punctuations and numbers were eliminated promoting focus on the linguistic content of the sentence.
 
-        \item Whitespace normalization: This ensures that the content or text is split in a consistent manner, consistent token. This is especially important for tokenizers such as TF-IDF as they are whitespace-sensitive.
+              \item Lowercasing: For standardization.
 
-        \item Label Standardization: There were also label mismatches between datasets which needed to be corrected before combining them. The SAfrisenti-Corpus dataset had sentiment labels as text. “positive,” “negative,” “neutral” and the Sesotho News headlines had integer labels -1,0,1 for negative, neutral, and positive sentiment respectively. We standardized these to fit as integer classes 0,1,2 for negative, positive, and neutral sentiment respectively
+              \item Emoji and emoticons: Emojis are not consistently tokenized across models, thus done through stripping unicodes.
 
-        Many African languages use diacritics and affixes and are very morphologically rich, thus carry semantic meaning. By intentionally retaining these diacritic characters as language specific tokens, we preserve the model's ability to learn meaningful subword patterns and maintain the morphology.
-        
-    \end{itemize}
+              \item Whitespace normalization: This ensures that the content or text is split in a consistent manner, consistent token. This is especially important for tokenizers such as TF-IDF as they are whitespace-sensitive.
+
+              \item Label Standardization: There were also label mismatches between datasets which needed to be corrected before combining them. The SAfrisenti-Corpus dataset had sentiment labels as text. “positive,” “negative,” “neutral” and the Sesotho News headlines had integer labels -1,0,1 for negative, neutral, and positive sentiment respectively. We standardized these to fit as integer classes 0,1,2 for negative, positive, and neutral sentiment respectively
+
+                    Many African languages use diacritics and affixes and are very morphologically rich, thus carry semantic meaning. By intentionally retaining these diacritic characters as language specific tokens, we preserve the model's ability to learn meaningful subword patterns and maintain the morphology.
+
+          \end{itemize}
 
     \item Feature Engineering
 
 
-    Fine Tuning AfroXLMR: Subword-Aware Transformer Model
+          Fine Tuning AfroXLMR: Subword-Aware Transformer Model
 
-    Our main model, AfroXLMR was pretrained on 17 African languages. It uses subword tokenization through sentencepiece subword splitting . Thus a good model to get started with.
+          Our main model, AfroXLMR was pretrained on 17 African languages. It uses subword tokenization through sentencepiece subword splitting . Thus a good model to get started with.
 
-    We fine-tuned our model for sequence classification task using the Hugging Face Trainer API (WandB):
+          We fine-tuned our model for sequence classification task using the Hugging Face Trainer API (WandB):
 
-    \begin{itemize}
-        \item The auto-tokenizer split the text or input into subword units and then mapped them to token IDs.
-        \item We combined the Sesotho news headlines and the SAfriSenti Sesotho dataset and fine-tuned the model for 3-5 epochs. 
-        \item A classification head with softmax output computes probabilities for sentiment classes. 
-    \end{itemize}
+          \begin{itemize}
+              \item The auto-tokenizer split the text or input into subword units and then mapped them to token IDs.
+              \item We combined the Sesotho news headlines and the SAfriSenti Sesotho dataset and fine-tuned the model for 3-5 epochs.
+              \item A classification head with softmax output computes probabilities for sentiment classes.
+          \end{itemize}
 
-    AfroXLMR has been optimized specifically for African languages. Its vocab is adapted to low-resource African subwords, which makes it extremely effective on code-switched texts and morphologically rich texts. It has the ability to generalize unseen but linguistically similar languages such as Sesotho which just makes it ideal for our study.
+          AfroXLMR has been optimized specifically for African languages. Its vocab is adapted to low-resource African subwords, which makes it extremely effective on code-switched texts and morphologically rich texts. It has the ability to generalize unseen but linguistically similar languages such as Sesotho which just makes it ideal for our study.
 
     \item Baseline and Comparative models
-    
-    TF-IDF and STF-IDF logistic regression models were used as baseline models to set a benchmark for comparison for our neural models.
 
-    We Trained two types of neural models on our combined dataset on classification. We identify these models as the Test models and Competitive models.
-    
-    For the Test models, the architecture is as follows.
+          TF-IDF and STF-IDF logistic regression models were used as baseline models to set a benchmark for comparison for our neural models.
 
-    \begin{itemize}
-            \item Input: The input layer would accept subword embeddings or STF-IDF vectors
-            \item Hidden layers: 2 hidden layers with dimensions of 128.
-            \item Output: An output layer with 3 dimensions for outputs of the 3 classes. Positive, Negative and Neutral
-            \item Optimization: Adam optimization
-            \item Loss function: CrossEntropyLoss
-    \end{itemize}
+          We Trained two types of neural models on our combined dataset on classification. We identify these models as the Test models and Competitive models.
 
-    The Test models are used as standard indications of potential performance of STF-IDF. From these we developed  models that would accept subword embeddings tokenized using BPE to act as a baseline, comparing the effectiveness of subword tokenization to STF-IDF. The models accepting STF-IDF vectors as inputs used different tokenization methods (N-gram, BPE, Word-Piece)
+          For the Test models, the architecture is as follows.
 
-    Lastly the Competitive models. Somewhat larger, these models were made to compete against the AfroXLMR-Large model. The hope was that larger models would potentially have better performance.
+          \begin{itemize}
+              \item Input: The input layer would accept subword embeddings or STF-IDF vectors
+              \item Hidden layers: 2 hidden layers with dimensions of 128.
+              \item Output: An output layer with 3 dimensions for outputs of the 3 classes. Positive, Negative and Neutral
+              \item Optimization: Adam optimization
+              \item Loss function: CrossEntropyLoss
+          \end{itemize}
 
-    The model details being: 
-    \begin{itemize}
-            \item Input: The input layer would accept STF-IDF vectors
-            \item Hidden layers: 7 hidden layers with varying dimensions during examination. Hoping more layers would lead to better performance.  
-            \item Output: An output layer with 3 dimensions for outputs of the 3 classes. Positive, Negative and Neutral
-            \item Optimization: Adam optimization
-            \item Loss function: CrossEntropyLoss
-    \end{itemize}
+          The Test models are used as standard indications of potential performance of STF-IDF. From these we developed  models that would accept subword embeddings tokenized using BPE to act as a baseline, comparing the effectiveness of subword tokenization to STF-IDF. The models accepting STF-IDF vectors as inputs used different tokenization methods (N-gram, BPE, Word-Piece)
+
+          Lastly the Competitive models. Somewhat larger, these models were made to compete against the AfroXLMR-Large model. The hope was that larger models would potentially have better performance.
+
+          The model details being:
+          \begin{itemize}
+              \item Input: The input layer would accept STF-IDF vectors
+              \item Hidden layers: 7 hidden layers with varying dimensions during examination. Hoping more layers would lead to better performance.
+              \item Output: An output layer with 3 dimensions for outputs of the 3 classes. Positive, Negative and Neutral
+              \item Optimization: Adam optimization
+              \item Loss function: CrossEntropyLoss
+          \end{itemize}
 \end{enumerate}
 
 \section{Experiments And Results}
 
- \begin{enumerate}
+\begin{enumerate}
     \item Evaluation Strategy
 
-    To evaluate our model performance, we used the following metrics.
-    \begin{itemize}
-    \item Accuracy: This metric depicts the overall correctness of predictions.
-    \item Precision: Measures the accuracy of positive predictions. It aims to maximize true positives and minimize false positives.
-    \item Recall: Identifies overall positive predictions. It aims to maximize true positives and minimize false negatives
-    \item F1-Score: The F1-score is the harmonic mean of both and balances both precision and recall. F1 gives a better sense of real performance especially on imbalanced datasets like ours.
-    \end{itemize}
+          To evaluate our model performance, we used the following metrics.
+          \begin{itemize}
+              \item Accuracy: This metric depicts the overall correctness of predictions.
+              \item Precision: Measures the accuracy of positive predictions. It aims to maximize true positives and minimize false positives.
+              \item Recall: Identifies overall positive predictions. It aims to maximize true positives and minimize false negatives
+              \item F1-Score: The F1-score is the harmonic mean of both and balances both precision and recall. F1 gives a better sense of real performance especially on imbalanced datasets like ours.
+          \end{itemize}
 
     \item Transformer Performance Evaluation
-    
-    The AfroXLMR model achieved a validation accuracy of ~60\% on the Sesotho dataset. While it performed well(all things considered) on the dominant negative class, the performance on the minority classes -neutral and positive is lower. The F1-Score indicates the model's moderate aggregate reliability, with precision being the lowest metric. 
 
-    \begin{figure}[h]
-    \includegraphics[width=7cm]{latex/evalution_images/confusion_matrix.png}
-    \centering
-    \caption{AfroXLMR Confusion Matrix}
-    \end{figure}
+          The AfroXLMR model achieved a validation accuracy of ~60\% on the Sesotho dataset. While it performed well(all things considered) on the dominant negative class, the performance on the minority classes -neutral and positive is lower. The F1-Score indicates the model's moderate aggregate reliability, with precision being the lowest metric.
 
-    Adding on to our evaluations, the model's confusion matrix reveals that the model does demonstrate a strong performance in identifying positive sentiments, correctly classifying 528 examples. However, it under performs significantly on negative and neutral classes, with many negative samples incorrectly labeled as positive. Similarly, the neutral class is also incorrectly classified, likely due to its under-representation in the dataset. This imbalance highlights a bias toward the positive class, which skews the decision boundaries of the model.
+          \begin{figure}[h]
+              \includegraphics[width=7cm]{evalution_images/confusion_matrix.png}
+              \centering
+              \caption{AfroXLMR Confusion Matrix}
+          \end{figure}
 
-    
+          Adding on to our evaluations, the model's confusion matrix reveals that the model does demonstrate a strong performance in identifying positive sentiments, correctly classifying 528 examples. However, it under performs significantly on negative and neutral classes, with many negative samples incorrectly labeled as positive. Similarly, the neutral class is also incorrectly classified, likely due to its under-representation in the dataset. This imbalance highlights a bias toward the positive class, which skews the decision boundaries of the model.
+
+
     \item Test Model Analysis
-    
-    Results from the Test models show weighted-average F1-scores of 59\% and greater for the STF-IDF models. The best being the STF-IDF Word-Piece model. These scores are considerably higher than the test model which uses standard embeddings tokenization with BPE. This model scored a weighted-average F1-score of 54\%
 
-    \begin{figure}[h]
-    \includegraphics[width=7cm]{evalution_images/neural_model_comparissons.png}
-    \centering
-    \end{figure}
-    
-   
+          Results from the Test models show weighted-average F1-scores of 59\% and greater for the STF-IDF models. The best being the STF-IDF Word-Piece model. These scores are considerably higher than the test model which uses standard embeddings tokenization with BPE. This model scored a weighted-average F1-score of 54\%
+
+          \begin{figure}[h]
+              \includegraphics[width=7cm]{evalution_images/neural_model_comparissons.png}
+              \centering
+          \end{figure}
+
+
     \item Competitive model Hyperparameter tuning
 
-    For the Competitive models we extensively tuned the hyper-parameters like training epochs, learning rate and hidden layer dimensions to find the best possible model for each subword tokenization method (N-gram, BPE, Word-Piece) combined with TF-IDF
+          For the Competitive models we extensively tuned the hyper-parameters like training epochs, learning rate and hidden layer dimensions to find the best possible model for each subword tokenization method (N-gram, BPE, Word-Piece) combined with TF-IDF
 
-    \begin{figure}[h]
-    \includegraphics[width=7cm]{evalution_images/ngram.png}
-    \centering
-    \caption{The best N-gram model configuration had dimensions:256, Epochs:20 and Learning rate: 0.001}
-    \end{figure}
+          \begin{figure}[h]
+              \includegraphics[width=7cm]{evalution_images/ngram.png}
+              \centering
+              \caption{The best N-gram model configuration had dimensions:256, Epochs:20 and Learning rate: 0.001}
+          \end{figure}
 
-    \begin{figure}[h]
-    \includegraphics[width=7cm]{evalution_images/bpe.png}
-    \centering
-    \caption{The best BPE model configuration had dimensions:128, Epochs:10 and Learning rate: 0.001}
-    \end{figure}
+          \begin{figure}[h]
+              \includegraphics[width=7cm]{evalution_images/bpe.png}
+              \centering
+              \caption{The best BPE model configuration had dimensions:128, Epochs:10 and Learning rate: 0.001}
+          \end{figure}
 
-    \begin{figure}[h]
-    \includegraphics[width=7cm]{evalution_images/word_piece.png}
-    \centering
-    \caption{The best Word-piece model configuration had dimensions:256, Epochs:15 and Learning rate: 0.001}
-    \end{figure}
-    
-    \newpage
+          \begin{figure}[h]
+              \includegraphics[width=7cm]{evalution_images/word_piece.png}
+              \centering
+              \caption{The best Word-piece model configuration had dimensions:256, Epochs:15 and Learning rate: 0.001}
+          \end{figure}
+
+          \newpage
     \item Comparative model analysis
 
-    From our tuned Competitive models on 3 different subword tokenization methods (N-gram, BPE and Word-Piece) combined with TF-IDF. The STF-IDF neural models scored F1-scores above 59\%, the best model being the STF-IDF BPE model scoring 62.55\%. All considerably higher than any of the comparative models which scored 46.67\%, 45.14\% and 46.77\% for the TF-IDF + Logistic regression, BPE STF-IDF + Logistic regression and AfroXLMR-large model respectively
+          From our tuned Competitive models on 3 different subword tokenization methods (N-gram, BPE and Word-Piece) combined with TF-IDF. The STF-IDF neural models scored F1-scores above 59\%, the best model being the STF-IDF BPE model scoring 62.55\%. All considerably higher than any of the comparative models which scored 46.67\%, 45.14\% and 46.77\% for the TF-IDF + Logistic regression, BPE STF-IDF + Logistic regression and AfroXLMR-large model respectively
 
-    \begin{figure}[h]
-    \includegraphics[width=7cm]{evalution_images/final_eval.png}
-    \centering
-    \caption{Model comparisons}
-    \end{figure}
+          \begin{figure}[h]
+              \includegraphics[width=7cm]{evalution_images/final_eval.png}
+              \centering
+              \caption{Model comparisons}
+          \end{figure}
 \end{enumerate}
 
 
@@ -263,7 +263,7 @@ Data quantity constraints: The limited number of samples was still small for tra
 
 Computational Limits: Training on Google Colab faced repeated interruptions, session limits, and runtime errors. These factors restricted experimentation, hyperparameter tuning, and thorough model validation.
 
-Lessons Learned: Need for scalable infrastructure: For large-scale models like AfroXLMR, more stable and scalable compute resources 
+Lessons Learned: Need for scalable infrastructure: For large-scale models like AfroXLMR, more stable and scalable compute resources
 
 Importance of data quality and quantity: Sufficient and clean data significantly impacts model performance. Future projects should allocate more time for data collection, cleaning, and augmentation.
 
