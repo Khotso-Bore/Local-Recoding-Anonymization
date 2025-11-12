@@ -916,16 +916,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\section{%
     \@startsection{section}{1}{\z@}{-10\p@ \@plus -4\p@ \@minus -2\p@}%
-    {4\p@}{\baselineskip 14pt\secfnt\@ucheadtrue}%
+    {14\p@}{\baselineskip 14pt\secfnt\@ucheadtrue}%
 }
 
 \def\subsection{%
     \@startsection{subsection}{2}{\z@}{-8\p@ \@plus -2\p@ \@minus -\p@}
-    {4\p@}{\secfnt}%
+    {14\p@}{\secfnt}%
 }
 \def\subsubsection{%
     \@startsection{subsubsection}{3}{\z@}{-8\p@ \@plus -2\p@ \@minus -\p@}%
-    {4\p@}{\subsecfnt}%
+    {14\p@}{\subsecfnt}%
 }
 \def\paragraph{%
     \vskip 12pt\@startsection{paragraph}{3}{\z@}{6\p@ \@plus \p@}%
