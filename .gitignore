@@ -1,0 +1,40 @@
+# LaTeX intermediate and output files
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.brf
+*.idx
+*.ilg
+*.ind
+*.lof
+*.log
+*.lot
+*.out
+*.toc
+*.run.xml
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.nav
+*.snm
+*.vrb
+
+# Latexmk and other build tool files
+latexmkrc
+*.xdv
+
+# Editors
+*.swp
+*.swo
+*~
+*.bak
+*.tmp
+
+# Mac OS and Windows junk
+.DS_Store
+Thumbs.db
+
+# Output directories (if using build folder)
+build/
+output/
