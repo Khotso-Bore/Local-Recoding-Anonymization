@@ -4,7 +4,7 @@
   % ------------------------------------------------
 
   \documentclass{sigkddExp}
-
+\usepackage{float}
   % --- Title & Author Info ---
   \title{Scalable Local-Recoding Anonymization using Locality
 Sensitive Hashing for Big Data Privacy Preservation}
@@ -155,12 +155,12 @@ Describe which algorithms or analytical methods were applied:
 
 \subsection{Results}
 
-\subsection{Information Loss Analysis}
+\subsubsection{Information Loss Analysis}
 
 Information loss (ILoss) quantifies the generalization needed to achieve $k$-anonymity, defined as the ratio of unique generalized values to original values across quasi-identifiers. Lower ILoss indicates better data utility.
 
 A parameter sweep across $\alpha \in \{2, 3, 4, 5, 6, 8, 10, 12\}$ illustrates the privacy--utility trade-off in LSH-based anonymization.
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \footnotesize
 \caption{Impact of $\alpha$ on Information Loss and Clustering Quality}
