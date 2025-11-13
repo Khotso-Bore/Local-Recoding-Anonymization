@@ -167,12 +167,9 @@ The proposed approach integrates these components:
 \end{itemize}
 
 \subsection{Results}
-Summarize the main results. Use figures/tables for clarity:
-\begin{itemize}
-  \item Cluster quality metrics (e.g., silhouette score)
-  \item Feature importances
-  \item Visualizations of clusters or decision boundaries
-\end{itemize}
+The performance of the proposed LSH-RC method was evaluated against a baseline k-means clustering approach across varying dataset sizes.
+The key metrics assessed were execution time and information loss (ILoss) as functions of the number of records.
+Overall our results indicate that LSH-RC scales much less efficiently than k-means while maintaining comparable ILoss levels.
 
 \begin{figure}[t]
   \centering
@@ -205,7 +202,7 @@ Summarize the main results. Use figures/tables for clarity:
   \label{fig:fourgrid}
 \end{figure}
 
-
+\pagebreak
 \subsection{Discussion}
 Interpret the results:
 \begin{itemize}
