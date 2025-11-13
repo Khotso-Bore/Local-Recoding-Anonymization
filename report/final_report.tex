@@ -1,30 +1,39 @@
-% ------------------------------------------------
-% Minimal KDD Explorations Report Template
-% Based on sigkddExp.cls (https://www.kdd.org/author-instructions)
-% ------------------------------------------------
+  % ------------------------------------------------
+  % Minimal KDD Explorations Report Template
+  % Based on sigkddExp.cls (https://www.kdd.org/author-instructions)
+  % ------------------------------------------------
 
-\documentclass{sigkddExp}
+  \documentclass{sigkddExp}
 
-% --- Title & Author Info ---
-\title{Project Title: A Short, Descriptive Title}
+  % --- Title & Author Info ---
+  \title{Scalable Local-Recoding Anonymization using Locality
+Sensitive Hashing for Big Data Privacy Preservation}
 
-\numberofauthors{4}
+  \numberofauthors{4}
 
-\author{
-\alignauthor First Author\\
-  \affaddr{University / Organization}\\
-  \email{first.author@email.com}
-\alignauthor Second Author\\
-  \affaddr{University / Organization}\\
-  \email{second.author@email.com}
-}
+  \author{
+    \alignauthor Khotso Bore\\
+      \affaddr{University Of Pretoria}\\
+      \email{u19180642@tuks.co.za}
+    \alignauthor Innocentia Ledimo\\
+      \affaddr{University Of Pretoria}\\
+      \email{u22928678@tuks.co.za}
+    \and
+    \alignauthor Busisiwe Vemba\\
+      \affaddr{University Of Pretoria}\\
+      \email{u22928678@tuks.co.za}
+    \alignauthor Siphesihle Khumalo\\
+      \affaddr{University Of Pretoria}\\
+      \email{u25759257@tuks.co.za}
+    }
 
-\date{\today}
+  \date{\today}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
+<<<<<<< HEAD
 This report details the implementation and evaluation of a scalable 
 local recoding anonymization approach using locality sensitive hashing (LSH), 
 primarily based on the research paper "Scalable Local-Recoding Anonymization using 
@@ -33,6 +42,10 @@ This approach proposed to enhance the scalability and efficiency of k-anonymity 
 Using the UCI Adult dataset \cite{barry_becker_adult_1996} the method integrates a new provenance-set-based
 semantic distance metric with LSH(specifically MinHash) for efficient data partition followed by 
 a parallelized, recursive agglomerative k-member clustering algorithm(Beta-AC) \cite{zhang_scalable_2016}.
+=======
+  A brief summary of your project.
+  Mention the dataset, goal (e.g., clustering/classification/EDA), and key findings in 4–5 sentences.
+>>>>>>> 687d415d14c2ff703fe9f157ccd7bd7552f961b2
 \end{abstract}
 
 
@@ -40,6 +53,7 @@ a parallelized, recursive agglomerative k-member clustering algorithm(Beta-AC) \
 \section{Exploratory Data Analysis (EDA)}
 
 \subsection{Data Inspection}
+<<<<<<< HEAD
 
 The dataset used is a preprocessed version of the Adult dataset from the UCI Machine 
 Learning Repository \cite{barry_becker_adult_1996}. It contains over 30000 records across 10 
@@ -62,37 +76,59 @@ The analysis began with loading the Adult dataset consisting of 15 columns initi
 \end{itemize}
 
 Describe your dataset: number of rows, columns, types of variables, missing values, and summary statistics.  
+=======
+Describe your dataset: number of rows, columns, types of variables, missing values, and summary statistics.
+>>>>>>> 687d415d14c2ff703fe9f157ccd7bd7552f961b2
 Include a short table or paragraph summarizing key properties.
 
 \begin{table}[h]
-\centering
-\caption{Dataset Overview}
-\begin{tabular}{lcc}
-\hline
-Feature & Type & Missing (\%) \\
-\hline
-Age & Numerical & 2.3 \\
-Gender & Categorical & 0.0 \\
-Income & Numerical & 5.1 \\
-\hline
-\end{tabular}
+  \centering
+  \caption{Dataset Overview}
+  \begin{tabular}{lcc}
+    \hline
+    Feature & Type        & Missing (\%) \\
+    \hline
+    Age     & Numerical   & 2.3          \\
+    Gender  & Categorical & 0.0          \\
+    Income  & Numerical   & 5.1          \\
+    \hline
+  \end{tabular}
 \end{table}
 
 \subsection{Visualisations}
-Include key plots to explore distributions or relationships:
-\begin{itemize}
-  \item Histogram of key numerical features
-  \item Boxplot to show outliers
-  \item Pairplot / Correlation heatmap for relationships
-\end{itemize}
 
+Here are some key visualizations from the EDA phase. We explore the distributions of the numwerical features age and hours worked, and their correlations.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.75\linewidth]{images/age_distribution.png}
+  \caption{Age Distribution}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.75\linewidth]{images/hours_per_week_distribution.png}
+  \caption{Hours Per Week Distribution}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.75\linewidth]{images/age_hours_correlation_matrix.png}
+  \caption{Correlation Matrix of Numerical Features}
+\end{figure}
+
+\pagebreak
 \subsection{Insights}
-Summarize interesting patterns:
-\begin{itemize}
-  \item Which variables correlate strongly?
-  \item Any skewed distributions or outliers?
-  \item Early hypotheses about clusters or classes
-\end{itemize}
+% Summarize interesting patterns:
+% \begin{itemize}
+%   \item Which variables correlate strongly?
+%   \item Any skewed distributions or outliers?
+%   \item Early hypotheses about clusters or classes
+% \end{itemize}
+
+The correlation between age and hours worked suggests that while there may be slight tendencies—such as younger or older employees working somewhat more or fewer hours—the relationship is not strong or consistent across the group.
+
+A large portion of employees work standard full-time hours (around 40 hours per week), with fewer employees working significantly more or less than this amount. Very likely because most records are from the United States, with a smaller representation from other countries.
 
 % ------------------------------------------------
 \section{Data Preprocessing}
@@ -100,23 +136,69 @@ Summarize interesting patterns:
 
 
 \subsection{Handling Missing Data}
-Explain how you dealt with missing data (imputation, deletion, etc.) and justify your choice.
+
+The dataset contained both standard and non-standard forms of missing values, which were handled in two stages:\\
+
+\subsubsection{Initial Removal of Missing Entries:}
+After loading the data, all records containing standard missing values were removed. This created a clean baseline for subsequent processing.
+
+\subsubsection{Handling Non-Standard Missing Indicators:}
+Some attributes, such as \texttt{workclass}, used the symbol ``?'' to represent missing values instead of a recognized missing data marker, such as \texttt{NaN}. These entries were first identified and converted into proper missing values, after which they were removed from the dataset.
+
+This two-step process ensured that all incomplete records were removed. Maintaining a complete dataset is crucial for the LSH-based anonymization pipeline, since missing values can distort similarity measurements and clustering outcomes.
 
 \subsection{Feature Engineering}
-List any new variables or transformations you applied (e.g., encoding, log transforms, ratios).
+Feature engineering focused on selecting only the attributes relevant for anonymization and preparing them for efficient processing.
 
-\subsection{Standardisation / Normalisation}
-Discuss any scaling applied (e.g., z-score, min–max) and why it was necessary.
+\subsubsection{Feature Selection:}
+Several columns were removed from the dataset because they were either:
+\begin{itemize}
+    \item Not quasi-identifiers that could link to external data sources,
+    \item Redundant representations of existing information, or
+    \item Sensitive or irrelevant for the anonymization process.
+\end{itemize}
+
+This reduced the dataset from fifteen to ten columns, retaining only the quasi-identifiers such as \textit{age}, \textit{workclass}, \textit{education}, \textit{marital status}, \textit{occupation}, \textit{relationship}, \textit{race}, \textit{sex}, \textit{native country}, and \textit{hours per week}. These attributes were used as the basis for the local-recoding anonymization.\\
+
+\subsubsection{Data Processing Throughout the LSH-Based \\Anonymization Pipeline:}
+Additional transformations were applied throughout the pipeline to ensure that data representation was suitable for the various algorithms at every stage of the pipeline:
+\begin{itemize}
+    \item Binary vector conversion was used to transform categorical values into formats suitable for MinHash operations.
+    \item Distance calculation functions were defined to measure semantic similarity between records.
+    \item String standardization was applied to ensure consistent formatting across all categorical values.
+\end{itemize}
+
+These preprocessing components established the foundation for the LSH-based anonymization pipeline, which relies on accurate and consistent data representation. Further details on these transformations are discussed in Section~3.
+
+\subsection{Standardisation and Normalisation}
+Unlike numerical datasets that require techniques such as z-score standardisation or min--max scaling, this dataset consists mainly of categorical variables. Therefore, normalisation was incorporated directly into the anonymisation pipeline through specialised distance-based approaches:
+\begin{itemize}
+    \item \textbf{Taxonomy-based distance metrics} that automatically bound all categorical distances within [0, 1] based on tree height and path length.
+    \item \textbf{Provenance set-based semantic distances} that ensure comparability across different attributes and taxonomy structures.
+    \item \textbf{String trimming} that removes whitespace to ensure consistent categorical value matching.
+\end{itemize}
+
+These methods maintain the original categorical form of the data while ensuring that all similarity and distance calculations are standardised. The details of these normalisation techniques are presented in Section~3.
+
 
 % ------------------------------------------------
 \section{Data Mining Methods and Analysis}
 
 \subsection{Methods}
-Describe which algorithms or analytical methods were applied:
+The anonymization process treats privacy preservation as a k-member clustering problem under k-anonymity.
+ The proposed approach integrates these components:
 \begin{itemize}
-  \item Clustering (e.g., K-Means, DBSCAN)
-  \item Dimensionality Reduction (e.g., PCA, t-SNE)
-  \item Classification/Regression (if applicable)
+  \item \textbf{Provenance-Set Semantic Distance:}
+Defines similarity between records using Jaccard distance of their provenance sets, enabling LSH to approximate semantic closeness.
+
+  \item \textbf{MinHash-Based LSH Partitioning:} Transforms each record’s provenance vector into MinHash signatures.
+Similar records are hashed into the same \(\beta \)-clusters (coarse groups).
+
+  \item \textbf{Recursive k-Member Clustering (LSH-RC):}
+Within each \(\beta \)-cluster, a recursive partitioning and agglomerative clustering algorithm is applied.
+Combines smaller clusters until each group size \(\geq\) k.
+
+    \item \textbf{Local recording:} Within each cluster, categorical attributes are generalized according to attribute taxonomies, ensuring that each cluster meets the k-anonymity requirement while minimizing information loss. The implementation constructs inverted taxonomies to compute necessary generalizations efficiently.
 \end{itemize}
 
 \subsection{Results}
@@ -146,7 +228,7 @@ Summarize what you found and learned:
 
 % ------------------------------------------------
 \section*{Acknowledgements}
-(Optional) Acknowledge any data sources, collaborators, or funding.
+ (Optional) Acknowledge any data sources, collaborators, or funding.
 
 % ------------------------------------------------
 \bibliographystyle{abbrv}
