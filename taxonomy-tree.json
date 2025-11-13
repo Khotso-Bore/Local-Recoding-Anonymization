@@ -20,6 +20,9 @@
       }
     },
     "Secondary": {
+      "Lower Secondary": {
+        "7th-8th": ["7th-8th"]
+        },
       "Junior": {
         "9th": ["9th"],
         "10th": ["10th"]
@@ -87,7 +90,8 @@
       "Mexico",
       "Puerto-Rico",
       "Outlying-US(Guam-USVI-etc)",
-      "Honduras"
+      "Honduras",
+      "Dominican-Republic"
     ],
     "Central & South America": [
       "Cuba",
@@ -126,7 +130,8 @@
       "Laos",
       "Vietnam",
       "Hong",
-      "South"
+      "South",
+      "Philippines"
     ]
   }
 }
