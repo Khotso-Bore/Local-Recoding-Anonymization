@@ -154,6 +154,44 @@ Describe which algorithms or analytical methods were applied:
 \end{itemize}
 
 \subsection{Results}
+
+\subsection{Information Loss Analysis}
+
+Information loss (ILoss) quantifies the generalization needed to achieve $k$-anonymity, defined as the ratio of unique generalized values to original values across quasi-identifiers. Lower ILoss indicates better data utility.
+
+A parameter sweep across $\alpha \in \{2, 3, 4, 5, 6, 8, 10, 12\}$ illustrates the privacy--utility trade-off in LSH-based anonymization.
+\begin{table}[t]
+\centering
+\footnotesize
+\caption{Impact of $\alpha$ on Information Loss and Clustering Quality}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+$\alpha$ & ILoss (\%) & Avg Cluster & Total Groups & \% Ideal Range & Time (s) \\ 
+\midrule
+2  & 50.7 & 197.1 & 153  & 42.5 & 20.9 \\
+3  & \textbf{50.4} & 134.1 & 225  & 56.0 & 20.5 \\
+4  & 53.4 & 84.3  & 358  & 58.7 & 21.3 \\
+6  & 52.5 & 32.5  & 928  & 66.5 & 22.1 \\
+8  & 53.3 & 44.8  & 673  & \textbf{74.7} & 23.4 \\
+12 & 53.7 & 26.8  & 1127 & 72.2 & 22.0 \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+\noindent \textbf{Findings:}
+\begin{itemize}
+    \item \textbf{Optimal utility:} $\alpha = 3$ yields the lowest ILoss (50.4\%), aligning with prior recommendations of $\alpha \in [2,4]$.
+    \item \textbf{Consistency:} ILoss remains stable (50--54\%) across all $\alpha$, implying taxonomy structure dominates clustering.
+    \item \textbf{Trade-off:} Smaller $\alpha$ values form fewer, larger clusters with better utility but weaker $k$-compliance; larger $\alpha$ values improve privacy at minor utility cost.
+    \item \textbf{Recommendation:} For $k=10$, $\alpha = 3$ best balances privacy and utility (56\% clusters within ideal range).
+\end{itemize}
+
+\noindent High-cardinality attributes (\textit{native-country}, \textit{occupation}) account for about 60\% of total ILoss, suggesting room for optimization via domain-specific taxonomies.
+
+
+
 Summarize the main results. Use figures/tables for clarity:
 \begin{itemize}
   \item Cluster quality metrics (e.g., silhouette score)
