@@ -1,70 +1,97 @@
-% ------------------------------------------------
-% Minimal KDD Explorations Report Template
-% Based on sigkddExp.cls (https://www.kdd.org/author-instructions)
-% ------------------------------------------------
+  % ------------------------------------------------
+  % Minimal KDD Explorations Report Template
+  % Based on sigkddExp.cls (https://www.kdd.org/author-instructions)
+  % ------------------------------------------------
 
-\documentclass{sigkddExp}
+  \documentclass{sigkddExp}
 
-% --- Title & Author Info ---
-\title{Project Title: A Short, Descriptive Title}
+  % --- Title & Author Info ---
+  \title{Scalable Local-Recoding Anonymization using Locality
+Sensitive Hashing for Big Data Privacy Preservation}
 
-\numberofauthors{4}
+  \numberofauthors{4}
 
-\author{
-\alignauthor First Author\\
-  \affaddr{University / Organization}\\
-  \email{first.author@email.com}
-\alignauthor Second Author\\
-  \affaddr{University / Organization}\\
-  \email{second.author@email.com}
-}
+  \author{
+    \alignauthor Khotso Bore\\
+      \affaddr{University Of Pretoria}\\
+      \email{u19180642@tuks.co.za}
+    \alignauthor Innocentia Ledimo\\
+      \affaddr{University Of Pretoria}\\
+      \email{u22928678@tuks.co.za}
+    \and
+    \alignauthor Busisiwe Vemba\\
+      \affaddr{University Of Pretoria}\\
+      \email{u22928678@tuks.co.za}
+    \alignauthor Siphesihle Khumalo\\
+      \affaddr{University Of Pretoria}\\
+      \email{u25759257@tuks.co.za}
+    }
 
-\date{\today}
+  \date{\today}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-A brief summary of your project.  
-Mention the dataset, goal (e.g., clustering/classification/EDA), and key findings in 4–5 sentences.
+  A brief summary of your project.
+  Mention the dataset, goal (e.g., clustering/classification/EDA), and key findings in 4–5 sentences.
 \end{abstract}
 
 % ------------------------------------------------
 \section{Exploratory Data Analysis (EDA)}
 
 \subsection{Data Inspection}
-Describe your dataset: number of rows, columns, types of variables, missing values, and summary statistics.  
+Describe your dataset: number of rows, columns, types of variables, missing values, and summary statistics.
 Include a short table or paragraph summarizing key properties.
 
 \begin{table}[h]
-\centering
-\caption{Dataset Overview}
-\begin{tabular}{lcc}
-\hline
-Feature & Type & Missing (\%) \\
-\hline
-Age & Numerical & 2.3 \\
-Gender & Categorical & 0.0 \\
-Income & Numerical & 5.1 \\
-\hline
-\end{tabular}
+  \centering
+  \caption{Dataset Overview}
+  \begin{tabular}{lcc}
+    \hline
+    Feature & Type        & Missing (\%) \\
+    \hline
+    Age     & Numerical   & 2.3          \\
+    Gender  & Categorical & 0.0          \\
+    Income  & Numerical   & 5.1          \\
+    \hline
+  \end{tabular}
 \end{table}
 
 \subsection{Visualisations}
-Include key plots to explore distributions or relationships:
-\begin{itemize}
-  \item Histogram of key numerical features
-  \item Boxplot to show outliers
-  \item Pairplot / Correlation heatmap for relationships
-\end{itemize}
 
+Here are some key visualizations from the EDA phase. We explore the distributions of the numwerical features age and hours worked, and their correlations.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.75\linewidth]{images/age_distribution.png}
+  \caption{Age Distribution}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.75\linewidth]{images/hours_per_week_distribution.png}
+  \caption{Hours Per Week Distribution}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.75\linewidth]{images/age_hours_correlation_matrix.png}
+  \caption{Correlation Matrix of Numerical Features}
+\end{figure}
+
+\pagebreak
 \subsection{Insights}
-Summarize interesting patterns:
-\begin{itemize}
-  \item Which variables correlate strongly?
-  \item Any skewed distributions or outliers?
-  \item Early hypotheses about clusters or classes
-\end{itemize}
+% Summarize interesting patterns:
+% \begin{itemize}
+%   \item Which variables correlate strongly?
+%   \item Any skewed distributions or outliers?
+%   \item Early hypotheses about clusters or classes
+% \end{itemize}
+
+The correlation between age and hours worked suggests that while there may be slight tendencies—such as younger or older employees working somewhat more or fewer hours—the relationship is not strong or consistent across the group.
+
+A large portion of employees work standard full-time hours (around 40 hours per week), with fewer employees working significantly more or less than this amount. Very likely because most records are from the United States, with a smaller representation from other countries.
 
 % ------------------------------------------------
 \section{Data Preprocessing}
@@ -162,7 +189,7 @@ Summarize what you found and learned:
 
 % ------------------------------------------------
 \section*{Acknowledgements}
-(Optional) Acknowledge any data sources, collaborators, or funding.
+ (Optional) Acknowledge any data sources, collaborators, or funding.
 
 % ------------------------------------------------
 \bibliographystyle{abbrv}
