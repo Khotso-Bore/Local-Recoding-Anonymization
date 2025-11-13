@@ -97,13 +97,50 @@ A large portion of employees work standard full-time hours (around 40 hours per 
 \section{Data Preprocessing}
 
 \subsection{Handling Missing Data}
-Explain how you dealt with missing data (imputation, deletion, etc.) and justify your choice.
+
+The dataset contained both standard and non-standard forms of missing values, which were handled in two stages:\\
+
+\subsubsection{Initial Removal of Missing Entries:}
+After loading the data, all records containing standard missing values were removed. This created a clean baseline for subsequent processing.
+
+\subsubsection{Handling Non-Standard Missing Indicators:}
+Some attributes, such as \texttt{workclass}, used the symbol ``?'' to represent missing values instead of a recognized missing data marker, such as \texttt{NaN}. These entries were first identified and converted into proper missing values, after which they were removed from the dataset.
+
+This two-step process ensured that all incomplete records were removed. Maintaining a complete dataset is crucial for the LSH-based anonymization pipeline, since missing values can distort similarity measurements and clustering outcomes.
 
 \subsection{Feature Engineering}
-List any new variables or transformations you applied (e.g., encoding, log transforms, ratios).
+Feature engineering focused on selecting only the attributes relevant for anonymization and preparing them for efficient processing.
 
-\subsection{Standardisation / Normalisation}
-Discuss any scaling applied (e.g., z-score, min–max) and why it was necessary.
+\subsubsection{Feature Selection:}
+Several columns were removed from the dataset because they were either:
+\begin{itemize}
+    \item Not quasi-identifiers that could link to external data sources,
+    \item Redundant representations of existing information, or
+    \item Sensitive or irrelevant for the anonymization process.
+\end{itemize}
+
+This reduced the dataset from fifteen to ten columns, retaining only the quasi-identifiers such as \textit{age}, \textit{workclass}, \textit{education}, \textit{marital status}, \textit{occupation}, \textit{relationship}, \textit{race}, \textit{sex}, \textit{native country}, and \textit{hours per week}. These attributes were used as the basis for the local-recoding anonymization.\\
+
+\subsubsection{Data Processing Throughout the LSH-Based \\Anonymization Pipeline:}
+Additional transformations were applied throughout the pipeline to ensure that data representation was suitable for the various algorithms at every stage of the pipeline:
+\begin{itemize}
+    \item Binary vector conversion was used to transform categorical values into formats suitable for MinHash operations.
+    \item Distance calculation functions were defined to measure semantic similarity between records.
+    \item String standardization was applied to ensure consistent formatting across all categorical values.
+\end{itemize}
+
+These preprocessing components established the foundation for the LSH-based anonymization pipeline, which relies on accurate and consistent data representation. Further details on these transformations are discussed in Section~3.
+
+\subsection{Standardisation and Normalisation}
+Unlike numerical datasets that require techniques such as z-score standardisation or min--max scaling, this dataset consists mainly of categorical variables. Therefore, normalisation was incorporated directly into the anonymisation pipeline through specialised distance-based approaches:
+\begin{itemize}
+    \item \textbf{Taxonomy-based distance metrics} that automatically bound all categorical distances within [0, 1] based on tree height and path length.
+    \item \textbf{Provenance set-based semantic distances} that ensure comparability across different attributes and taxonomy structures.
+    \item \textbf{String trimming} that removes whitespace to ensure consistent categorical value matching.
+\end{itemize}
+
+These methods maintain the original categorical form of the data while ensuring that all similarity and distance calculations are standardised. The details of these normalisation techniques are presented in Section~3.
+
 
 % ------------------------------------------------
 \section{Data Mining Methods and Analysis}
