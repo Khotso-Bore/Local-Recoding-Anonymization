@@ -4,6 +4,10 @@
   % ------------------------------------------------
 
   \documentclass{sigkddExp}
+  \usepackage{subfig}
+  % \usepackage{graphicx}
+  % \usepackage{caption}
+  % \usepackage{subcaption}
 
   % --- Title & Author Info ---
   \title{Scalable Local-Recoding Anonymization using Locality
@@ -68,13 +72,13 @@ Here are some key visualizations from the EDA phase. We explore the distribution
   \caption{Age Distribution}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \centering
   \includegraphics[width=0.75\linewidth]{images/hours_per_week_distribution.png}
   \caption{Hours Per Week Distribution}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \centering
   \includegraphics[width=0.75\linewidth]{images/age_hours_correlation_matrix.png}
   \caption{Correlation Matrix of Numerical Features}
@@ -114,9 +118,9 @@ Feature engineering focused on selecting only the attributes relevant for anonym
 \subsubsection{Feature Selection:}
 Several columns were removed from the dataset because they were either:
 \begin{itemize}
-    \item Not quasi-identifiers that could link to external data sources,
-    \item Redundant representations of existing information, or
-    \item Sensitive or irrelevant for the anonymization process.
+  \item Not quasi-identifiers that could link to external data sources,
+  \item Redundant representations of existing information, or
+  \item Sensitive or irrelevant for the anonymization process.
 \end{itemize}
 
 This reduced the dataset from fifteen to ten columns, retaining only the quasi-identifiers such as \textit{age}, \textit{workclass}, \textit{education}, \textit{marital status}, \textit{occupation}, \textit{relationship}, \textit{race}, \textit{sex}, \textit{native country}, and \textit{hours per week}. These attributes were used as the basis for the local-recoding anonymization.\\
@@ -124,9 +128,9 @@ This reduced the dataset from fifteen to ten columns, retaining only the quasi-i
 \subsubsection{Data Processing Throughout the LSH-Based \\Anonymization Pipeline:}
 Additional transformations were applied throughout the pipeline to ensure that data representation was suitable for the various algorithms at every stage of the pipeline:
 \begin{itemize}
-    \item Binary vector conversion was used to transform categorical values into formats suitable for MinHash operations.
-    \item Distance calculation functions were defined to measure semantic similarity between records.
-    \item String standardization was applied to ensure consistent formatting across all categorical values.
+  \item Binary vector conversion was used to transform categorical values into formats suitable for MinHash operations.
+  \item Distance calculation functions were defined to measure semantic similarity between records.
+  \item String standardization was applied to ensure consistent formatting across all categorical values.
 \end{itemize}
 
 These preprocessing components established the foundation for the LSH-based anonymization pipeline, which relies on accurate and consistent data representation. Further details on these transformations are discussed in Section~3.
@@ -134,9 +138,9 @@ These preprocessing components established the foundation for the LSH-based anon
 \subsection{Standardisation and Normalisation}
 Unlike numerical datasets that require techniques such as z-score standardisation or min--max scaling, this dataset consists mainly of categorical variables. Therefore, normalisation was incorporated directly into the anonymisation pipeline through specialised distance-based approaches:
 \begin{itemize}
-    \item \textbf{Taxonomy-based distance metrics} that automatically bound all categorical distances within [0, 1] based on tree height and path length.
-    \item \textbf{Provenance set-based semantic distances} that ensure comparability across different attributes and taxonomy structures.
-    \item \textbf{String trimming} that removes whitespace to ensure consistent categorical value matching.
+  \item \textbf{Taxonomy-based distance metrics} that automatically bound all categorical distances within [0, 1] based on tree height and path length.
+  \item \textbf{Provenance set-based semantic distances} that ensure comparability across different attributes and taxonomy structures.
+  \item \textbf{String trimming} that removes whitespace to ensure consistent categorical value matching.
 \end{itemize}
 
 These methods maintain the original categorical form of the data while ensuring that all similarity and distance calculations are standardised. The details of these normalisation techniques are presented in Section~3.
@@ -147,19 +151,19 @@ These methods maintain the original categorical form of the data while ensuring 
 
 \subsection{Methods}
 The anonymization process treats privacy preservation as a k-member clustering problem under k-anonymity.
- The proposed approach integrates these components:
+The proposed approach integrates these components:
 \begin{itemize}
   \item \textbf{Provenance-Set Semantic Distance:}
-Defines similarity between records using Jaccard distance of their provenance sets, enabling LSH to approximate semantic closeness.
+        Defines similarity between records using Jaccard distance of their provenance sets, enabling LSH to approximate semantic closeness.
 
   \item \textbf{MinHash-Based LSH Partitioning:} Transforms each record’s provenance vector into MinHash signatures.
-Similar records are hashed into the same \(\beta \)-clusters (coarse groups).
+        Similar records are hashed into the same \(\beta \)-clusters (coarse groups).
 
   \item \textbf{Recursive k-Member Clustering (LSH-RC):}
-Within each \(\beta \)-cluster, a recursive partitioning and agglomerative clustering algorithm is applied.
-Combines smaller clusters until each group size \(\geq\) k.
+        Within each \(\beta \)-cluster, a recursive partitioning and agglomerative clustering algorithm is applied.
+        Combines smaller clusters until each group size \(\geq\) k.
 
-    \item \textbf{Local recording:} Within each cluster, categorical attributes are generalized according to attribute taxonomies, ensuring that each cluster meets the k-anonymity requirement while minimizing information loss. The implementation constructs inverted taxonomies to compute necessary generalizations efficiently.
+  \item \textbf{Local recording:} Within each cluster, categorical attributes are generalized according to attribute taxonomies, ensuring that each cluster meets the k-anonymity requirement while minimizing information loss. The implementation constructs inverted taxonomies to compute necessary generalizations efficiently.
 \end{itemize}
 
 \subsection{Results}
@@ -170,6 +174,38 @@ Summarize the main results. Use figures/tables for clarity:
   \item Visualizations of clusters or decision boundaries
 \end{itemize}
 
+\begin{figure}[t]
+  \centering
+
+  % --- Row 1 ---
+  \subfloat[Execution Time A]{
+    \includegraphics[width=0.45\linewidth]{images/time_a.png}
+    \label{fig:a}
+  }
+  \hfill
+  \subfloat[ILoss A]{
+    \includegraphics[width=0.45\linewidth]{images/iloss_a.png}
+    \label{fig:b}
+  }
+
+  \vspace{0.5em}
+
+  % --- Row 2 ---
+  \subfloat[Execution Time B]{
+    \includegraphics[width=0.45\linewidth]{images/time_b.png}
+    \label{fig:c}
+  }
+  \hfill
+  \subfloat[ILoss B] {
+    \includegraphics[width=0.45\linewidth]{images/iloss_b.png}
+    \label{fig:d}
+  }
+
+  \caption{Execution time (a) \& (c), and ILoss (b) \& (d) w.r.t. \#(records).}
+  \label{fig:fourgrid}
+\end{figure}
+
+
 \subsection{Discussion}
 Interpret the results:
 \begin{itemize}
@@ -177,6 +213,8 @@ Interpret the results:
   \item Were the methods appropriate?
   \item Any limitations or anomalies?
 \end{itemize}
+
+
 
 % ------------------------------------------------
 \section{Conclusion and Reflection}
