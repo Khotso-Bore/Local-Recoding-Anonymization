@@ -37,14 +37,14 @@ Sensitive Hashing for Big Data Privacy Preservation}
 \maketitle
 
 \begin{abstract}
-This report details the implementation and evaluation of a scalable 
-local recoding anonymization approach using locality sensitive hashing (LSH), 
-primarily based on the research paper "Scalable Local-Recoding Anonymization using 
-Locality Sensitive Hashing for Big Data Privacy Preservation" \cite{zhang_scalable_2016}.
-This approach proposed to enhance the scalability and efficiency of k-anonymity in big data environments.
-Using the UCI Adult dataset \cite{barry_becker_adult_1996} the method integrates a new provenance-set-based
-semantic distance metric with LSH(specifically MinHash) for efficient data partition followed by 
-a parallelized, recursive agglomerative k-member clustering algorithm(Beta-AC) \cite{zhang_scalable_2016}.
+  This report details the implementation and evaluation of a scalable
+  local recoding anonymization approach using locality sensitive hashing (LSH),
+  primarily based on the research paper "Scalable Local-Recoding Anonymization using
+  Locality Sensitive Hashing for Big Data Privacy Preservation" \cite{zhang_scalable_2016}.
+  This approach proposed to enhance the scalability and efficiency of k-anonymity in big data environments.
+  Using the UCI Adult dataset \cite{barry_becker_adult_1996} the method integrates a new provenance-set-based
+  semantic distance metric with LSH(specifically MinHash) for efficient data partition followed by
+  a parallelized, recursive agglomerative k-member clustering algorithm(Beta-AC) \cite{zhang_scalable_2016}.
 \end{abstract}
 
 
@@ -53,27 +53,27 @@ a parallelized, recursive agglomerative k-member clustering algorithm(Beta-AC) \
 
 \subsection{Data Inspection}
 
-The dataset used is a preprocessed version of the Adult dataset from the UCI Machine 
-Learning Repository \cite{barry_becker_adult_1996}. It contains over 30000 records across 10 
-relevant attributes including 8 quasi-identifiers and 2 numerical features implicitly discretised 
-by the methodology. 
+The dataset used is a preprocessed version of the Adult dataset from the UCI Machine
+Learning Repository \cite{barry_becker_adult_1996}. It contains over 30000 records across 10
+relevant attributes including 8 quasi-identifiers and 2 numerical features implicitly discretised
+by the methodology.
 
 The analysis began with loading the Adult dataset consisting of 15 columns initially.
 
 \begin{itemize}
   \item Initial Data Count: The raw dataset had 32561 entries.
-  \item column dropping: Several columns were considered non-quasi-identifying or as non-sensitive 
-  like capital-gain, capital-loss, fnlwgt, education-num, and income; in order to focus on the key quasi-identifier(QI) 
-  attributes. 
-  \item Final Quasi identifiers set: The resulting dataset contained 10 columns consisting of 8 categorical 
-  attributes(workclass, education, marital-status, occupation, relationship, race, sex, native-country), 
-  and two numerical attributes(age, hours-per-week) that would be discretized by the method. Work Class is 
-  used as the sensitive attribute. 
-  \item Missing Data: The initial inspection revealed missing data represented by a '?' string. These 
-  records were removed, reducing the total to 30162 clean records.
+  \item column dropping: Several columns were considered non-quasi-identifying or as non-sensitive
+        like capital-gain, capital-loss, fnlwgt, education-num, and income; in order to focus on the key quasi-identifier(QI)
+        attributes.
+  \item Final Quasi identifiers set: The resulting dataset contained 10 columns consisting of 8 categorical
+        attributes(workclass, education, marital-status, occupation, relationship, race, sex, native-country),
+        and two numerical attributes(age, hours-per-week) that would be discretized by the method. Work Class is
+        used as the sensitive attribute.
+  \item Missing Data: The initial inspection revealed missing data represented by a '?' string. These
+        records were removed, reducing the total to 30162 clean records.
 \end{itemize}
 
-Describe your dataset: number of rows, columns, types of variables, missing values, and summary statistics.  
+Describe your dataset: number of rows, columns, types of variables, missing values, and summary statistics.
 Include a short table or paragraph summarizing key properties.
 
 \begin{table}[h]
@@ -177,7 +177,9 @@ These methods maintain the original categorical form of the data while ensuring 
 
 
 % ------------------------------------------------
+\pagebreak
 \section{Data Mining Methods and Analysis}
+
 
 \subsection{Methods}
 The anonymization process treats privacy preservation as a k-member clustering problem under k-anonymity.
@@ -201,7 +203,7 @@ The performance of the proposed LSH-RC method was evaluated against a baseline k
 The key metrics assessed were execution time and information loss (ILoss) as functions of the number of records.
 Overall our results indicate that LSH-RC scales much less efficiently than k-means while maintaining comparable ILoss levels.
 
-\begin{figure}[t]
+\begin{figure}[h]
   \centering
 
   % --- Row 1 ---
@@ -232,7 +234,7 @@ Overall our results indicate that LSH-RC scales much less efficiently than k-mea
   \label{fig:fourgrid}
 \end{figure}
 
-\pagebreak
+
 \subsection{Discussion}
 Interpret the results:
 \begin{itemize}
