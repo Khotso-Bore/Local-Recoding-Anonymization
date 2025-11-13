@@ -25,14 +25,42 @@
 \maketitle
 
 \begin{abstract}
-A brief summary of your project.  
-Mention the dataset, goal (e.g., clustering/classification/EDA), and key findings in 4–5 sentences.
+This report details the implementation and evaluation of a scalable 
+local recoding anonymization approach using locality sensitive hashing (LSH), 
+primarily based on the research paper "Scalable Local-Recoding Anonymization using 
+Locality Sensitive Hashing for Big Data Privacy Preservation" \cite{zhang_scalable_2016}.
+This approach proposed to enhance the scalability and efficiency of k-anonymity in big data environments.
+Using the UCI Adult dataset \cite{barry_becker_adult_1996} the method integrates a new provenance-set-based
+semantic distance metric with LSH(specifically MinHash) for efficient data partition followed by 
+a parallelized, recursive agglomerative k-member clustering algorithm(Beta-AC) \cite{zhang_scalable_2016}.
 \end{abstract}
+
 
 % ------------------------------------------------
 \section{Exploratory Data Analysis (EDA)}
 
 \subsection{Data Inspection}
+
+The dataset used is a preprocessed version of the Adult dataset from the UCI Machine 
+Learning Repository \cite{barry_becker_adult_1996}. It contains over 30000 records across 10 
+relevant attributes including 8 quasi-identifiers and 2 numerical features implicitly discretised 
+by the methodology. 
+
+The analysis began with loading the Adult dataset consisting of 15 columns initially.
+
+\begin{itemize}
+  \item Initial Data Count: The raw dataset had 32561 entries.
+  \item column dropping: Several columns were considered non-quasi-identifying or as non-sensitive 
+  like capital-gain, capital-loss, fnlwgt, education-num, and income; in order to focus on the key quasi-identifier(QI) 
+  attributes. 
+  \item Final Quasi identifiers set: The resulting dataset contained 10 columns consisting of 8 categorical 
+  attributes(workclass, education, marital-status, occupation, relationship, race, sex, native-country), 
+  and two numerical attributes(age, hours-per-week) that would be discretized by the method. Work Class is 
+  used as the sensitive attribute. 
+  \item Missing Data: The initial inspection revealed missing data represented by a '?' string. These 
+  records were removed, reducing the total to 30162 clean records.
+\end{itemize}
+
 Describe your dataset: number of rows, columns, types of variables, missing values, and summary statistics.  
 Include a short table or paragraph summarizing key properties.
 
@@ -68,6 +96,8 @@ Summarize interesting patterns:
 
 % ------------------------------------------------
 \section{Data Preprocessing}
+
+
 
 \subsection{Handling Missing Data}
 Explain how you dealt with missing data (imputation, deletion, etc.) and justify your choice.
