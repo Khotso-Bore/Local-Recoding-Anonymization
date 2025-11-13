@@ -1,0 +1,125 @@
+% ------------------------------------------------
+% Minimal KDD Explorations Report Template
+% Based on sigkddExp.cls (https://www.kdd.org/author-instructions)
+% ------------------------------------------------
+
+\documentclass{sigkddExp}
+
+% --- Title & Author Info ---
+\title{Project Title: A Short, Descriptive Title}
+
+\numberofauthors{4}
+
+\author{
+\alignauthor First Author\\
+  \affaddr{University / Organization}\\
+  \email{first.author@email.com}
+\alignauthor Second Author\\
+  \affaddr{University / Organization}\\
+  \email{second.author@email.com}
+}
+
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+A brief summary of your project.  
+Mention the dataset, goal (e.g., clustering/classification/EDA), and key findings in 4–5 sentences.
+\end{abstract}
+
+% ------------------------------------------------
+\section{Exploratory Data Analysis (EDA)}
+
+\subsection{Data Inspection}
+Describe your dataset: number of rows, columns, types of variables, missing values, and summary statistics.  
+Include a short table or paragraph summarizing key properties.
+
+\begin{table}[h]
+\centering
+\caption{Dataset Overview}
+\begin{tabular}{lcc}
+\hline
+Feature & Type & Missing (\%) \\
+\hline
+Age & Numerical & 2.3 \\
+Gender & Categorical & 0.0 \\
+Income & Numerical & 5.1 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Visualisations}
+Include key plots to explore distributions or relationships:
+\begin{itemize}
+  \item Histogram of key numerical features
+  \item Boxplot to show outliers
+  \item Pairplot / Correlation heatmap for relationships
+\end{itemize}
+
+\subsection{Insights}
+Summarize interesting patterns:
+\begin{itemize}
+  \item Which variables correlate strongly?
+  \item Any skewed distributions or outliers?
+  \item Early hypotheses about clusters or classes
+\end{itemize}
+
+% ------------------------------------------------
+\section{Data Preprocessing}
+
+\subsection{Handling Missing Data}
+Explain how you dealt with missing data (imputation, deletion, etc.) and justify your choice.
+
+\subsection{Feature Engineering}
+List any new variables or transformations you applied (e.g., encoding, log transforms, ratios).
+
+\subsection{Standardisation / Normalisation}
+Discuss any scaling applied (e.g., z-score, min–max) and why it was necessary.
+
+% ------------------------------------------------
+\section{Data Mining Methods and Analysis}
+
+\subsection{Methods}
+Describe which algorithms or analytical methods were applied:
+\begin{itemize}
+  \item Clustering (e.g., K-Means, DBSCAN)
+  \item Dimensionality Reduction (e.g., PCA, t-SNE)
+  \item Classification/Regression (if applicable)
+\end{itemize}
+
+\subsection{Results}
+Summarize the main results. Use figures/tables for clarity:
+\begin{itemize}
+  \item Cluster quality metrics (e.g., silhouette score)
+  \item Feature importances
+  \item Visualizations of clusters or decision boundaries
+\end{itemize}
+
+\subsection{Discussion}
+Interpret the results:
+\begin{itemize}
+  \item What patterns or groups emerged?
+  \item Were the methods appropriate?
+  \item Any limitations or anomalies?
+\end{itemize}
+
+% ------------------------------------------------
+\section{Conclusion and Reflection}
+Summarize what you found and learned:
+\begin{itemize}
+  \item Key insights from data mining
+  \item Challenges faced and how you overcame them
+  \item Potential future work or improvements
+\end{itemize}
+
+% ------------------------------------------------
+\section*{Acknowledgements}
+(Optional) Acknowledge any data sources, collaborators, or funding.
+
+% ------------------------------------------------
+\bibliographystyle{abbrv}
+\bibliography{references}
+
+\end{document}
