@@ -146,11 +146,20 @@ These methods maintain the original categorical form of the data while ensuring 
 \section{Data Mining Methods and Analysis}
 
 \subsection{Methods}
-Describe which algorithms or analytical methods were applied:
+The anonymization process treats privacy preservation as a k-member clustering problem under k-anonymity.
+ The proposed approach integrates these components:
 \begin{itemize}
-  \item Clustering (e.g., K-Means, DBSCAN)
-  \item Dimensionality Reduction (e.g., PCA, t-SNE)
-  \item Classification/Regression (if applicable)
+  \item \textbf{Provenance-Set Semantic Distance:}
+Defines similarity between records using Jaccard distance of their provenance sets, enabling LSH to approximate semantic closeness.
+
+  \item \textbf{MinHash-Based LSH Partitioning:} Transforms each record’s provenance vector into MinHash signatures.
+Similar records are hashed into the same \(\beta \)-clusters (coarse groups).
+
+  \item \textbf{Recursive k-Member Clustering (LSH-RC):}
+Within each \(\beta \)-cluster, a recursive partitioning and agglomerative clustering algorithm is applied.
+Combines smaller clusters until each group size \(\geq\) k.
+
+    \item \textbf{Local recording:} Within each cluster, categorical attributes are generalized according to attribute taxonomies, ensuring that each cluster meets the k-anonymity requirement while minimizing information loss. The implementation constructs inverted taxonomies to compute necessary generalizations efficiently.
 \end{itemize}
 
 \subsection{Results}
