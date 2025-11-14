@@ -63,25 +63,33 @@ The analysis began with loading the Adult dataset consisting of 15 columns initi
   attributes. 
   \item Final Quasi identifiers set: The resulting dataset contained 10 columns consisting of 8 categorical 
   attributes(workclass, education, marital-status, occupation, relationship, race, sex, native-country), 
-  and two numerical attributes(age, hours-per-week) that would be discretized by the method. Work Class is 
-  used as the sensitive attribute. 
+  and two numerical attributes(age, hours-per-week) as tabulated in table ~\ref{tab:dataset_overview} that would be discretized by the methodology. 
+  Work Class is used as the sensitive attribute. 
   \item Missing Data: The initial inspection revealed missing data represented by a '?' string. These 
   records were removed, reducing the total to 30162 clean records.
 \end{itemize}
 
-Describe your dataset: number of rows, columns, types of variables, missing values, and summary statistics.  
-Include a short table or paragraph summarizing key properties.
+The table features the quasi-identifier (QI) attributes used in the analysis, inclusive of their type and the 
+calculated percentage of missing values which are marked as '?' of which were removed during preprocessing. The 
+total rows removed due to missing values was 2399 out of 32561, resulting in a 7.37\% for features containing these entries. 
 
 \begin{table}[h]
   \centering
-  \caption{Dataset Overview}
+  \caption{Dataset Overview \label{tab:dataset_overview}}
   \begin{tabular}{lcc}
     \hline
-    Feature & Type        & Missing (\%) \\
+    \textbf{Feature} & \textbf{Type} & \textbf{Missing (\%)} \\
     \hline
-    Age     & Numerical   & 2.3          \\
-    Gender  & Categorical & 0.0          \\
-    Income  & Numerical   & 5.1          \\
+    \text{Age} & \text{Numerical} & 0.0 \\
+    \text{Workclass} & \text{Categorical} & 7.37 \\
+    \text{education} & \text{Categorical} & 0.0 \\
+    \text{marital-status} & \text{Categorical} & 0.0 \\
+    \text{occupation} & \text{Categorical} & 7.37 \\
+    \text{relationship} & \text{Categorical} & 0.0 \\
+    \text{race} & \text{Categorical} & 0.0 \\
+    \text{sex} & \text{Categorical} & 0.0 \\
+    \text{hours-per-week} & \text{Numerical} & 0.0 \\
+    \text{native-country} & \text{Categorical} & 7.37 \\
     \hline
   \end{tabular}
 \end{table}
@@ -117,10 +125,13 @@ Here are some key visualizations from the EDA phase. We explore the distribution
 %   \item Early hypotheses about clusters or classes
 % \end{itemize}
 
-The correlation between age and hours worked suggests that while there may be slight tendencies—such as younger or older employees working somewhat more or fewer hours—the relationship is not strong or consistent across the group.
+The correlation between age and hours worked suggests that while there may be slight 
+tendencies such as younger or older employees working somewhat more or fewer hours, the 
+relationship is not strong or consistent across the group.
 
-A large portion of employees work standard full-time hours (around 40 hours per week), with fewer employees working significantly more or less than this amount. Very likely because most records are from the United States, with a smaller representation from other countries.
-
+A large portion of employees work standard full-time hours (around 40 hours per week), with 
+fewer employees working significantly more or less than this amount. This is highly likely due to 
+most records being from te=he United States, with a smaller representation from other countries. 
 % ------------------------------------------------
 \section{Data Preprocessing}
 
@@ -128,12 +139,12 @@ A large portion of employees work standard full-time hours (around 40 hours per 
 
 \subsection{Handling Missing Data}
 
-The dataset contained both standard and non-standard forms of missing values, which were handled in two stages:\\
+The dataset contained both standard and non-standard forms of missing values, which were handled in two stages:
 
-\subsubsection{Initial Removal of Missing Entries:}
+\subsubsection{\textbf{Initial Removal of Missing Entries:}}
 After loading the data, all records containing standard missing values were removed. This created a clean baseline for subsequent processing.
 
-\subsubsection{Handling Non-Standard Missing Indicators:}
+\subsubsection{\textbf{Handling Non-Standard Missing Indicators:}}
 Some attributes, such as \texttt{workclass}, used the symbol ``?'' to represent missing values instead of a recognized missing data marker, such as \texttt{NaN}. These entries were first identified and converted into proper missing values, after which they were removed from the dataset.
 
 This two-step process ensured that all incomplete records were removed. Maintaining a complete dataset is crucial for the LSH-based anonymization pipeline, since missing values can distort similarity measurements and clustering outcomes.
@@ -141,7 +152,7 @@ This two-step process ensured that all incomplete records were removed. Maintain
 \subsection{Feature Engineering}
 Feature engineering focused on selecting only the attributes relevant for anonymization and preparing them for efficient processing.
 
-\subsubsection{Feature Selection:}
+\subsubsection{\textbf{Feature Selection:}}
 Several columns were removed from the dataset because they were either:
 \begin{itemize}
     \item Not quasi-identifiers that could link to external data sources,
@@ -151,7 +162,7 @@ Several columns were removed from the dataset because they were either:
 
 This reduced the dataset from fifteen to ten columns, retaining only the quasi-identifiers such as \textit{age}, \textit{workclass}, \textit{education}, \textit{marital status}, \textit{occupation}, \textit{relationship}, \textit{race}, \textit{sex}, \textit{native country}, and \textit{hours per week}. These attributes were used as the basis for the local-recoding anonymization.\\
 
-\subsubsection{Data Processing Throughout the LSH-Based \\Anonymization Pipeline:}
+\subsubsection{\textbf{Data Processing Throughout the LSH-Based \\Anonymization Pipeline:}}
 Additional transformations were applied throughout the pipeline to ensure that data representation was suitable for the various algorithms at every stage of the pipeline:
 \begin{itemize}
     \item Binary vector conversion was used to transform categorical values into formats suitable for MinHash operations.
@@ -162,7 +173,7 @@ Additional transformations were applied throughout the pipeline to ensure that d
 These preprocessing components established the foundation for the LSH-based anonymization pipeline, which relies on accurate and consistent data representation. Further details on these transformations are discussed in Section~3.
 
 \subsection{Standardisation and Normalisation}
-Unlike numerical datasets that require techniques such as z-score standardisation or min--max scaling, this dataset consists mainly of categorical variables. Therefore, normalisation was incorporated directly into the anonymisation pipeline through specialised distance-based approaches:
+Unlike numerical datasets that require techniques such as z-score standardisation or min--max scaling \cite{kappal2019data}, this dataset consists mainly of categorical variables. Therefore, normalisation was incorporated directly into the anonymisation pipeline through specialised distance-based approaches:
 \begin{itemize}
     \item \textbf{Taxonomy-based distance metrics} that automatically bound all categorical distances within [0, 1] based on tree height and path length.
     \item \textbf{Provenance set-based semantic distances} that ensure comparability across different attributes and taxonomy structures.
@@ -189,38 +200,161 @@ Similar records are hashed into the same \(\beta \)-clusters (coarse groups).
 Within each \(\beta \)-cluster, a recursive partitioning and agglomerative clustering algorithm is applied.
 Combines smaller clusters until each group size \(\geq\) k.
 
-    \item \textbf{Local recording:} Within each cluster, categorical attributes are generalized according to attribute taxonomies, ensuring that each cluster meets the k-anonymity requirement while minimizing information loss. The implementation constructs inverted taxonomies to compute necessary generalizations efficiently.
+    \item \textbf{Local recording:} Within each cluster, categorical attributes are generalized according to attribute taxonomies, 
+    ensuring that each cluster meets the k-anonymity requirement while minimizing information loss. The implementation constructs 
+    inverted taxonomies to compute necessary generalizations efficiently.
 \end{itemize}
 
 \subsection{Results}
-Summarize the main results. Use figures/tables for clarity:
+
+The performance of the LSH-based Recoding(LSH-RC) algorithm was evaluated across multiple dataset sizes and compare to the baseline k-means anonymization approach. 
+The two primary metrics analyzed were execution time and information loss(iLoss). 
+
+\subsubsection{\textbf{Execution Time}}
+
+Across all tested dataset sizes, the execution time of the LSH-RC increased rapidly as the number 
+of input records grew. 
+
 \begin{itemize}
-  \item Cluster quality metrics (e.g., silhouette score)
-  \item Feature importances
-  \item Visualizations of clusters or decision boundaries
+  \item A large number \(\beta \)-clusters during the LSH phase e.g 47 clusters for 400 records.
+  \item Highly uneven cluster sizes ranging from very small singletons to very large clusters with 
+  over 100 records).
+  \item A recursive clustering phase that became increasingly expensive as the number of inadequate (<k) 
+  intermediate clusters accumulated.
 \end{itemize}
 
-\subsection{Discussion}
-Interpret the results:
+The result growth was noticeably super-linear in execution time. In comparison, \textbf{k-means} scaled more smoothly 
+evident with an increased runtime that is almost linearly with dataset size, demonstrating significantly better computational 
+efficiency.
+
+\subsubsection{\textbf{Information Loss}}
+
+Despite the higher computational cost, the LSH-RC method achieved similar and slightly lower 
+iLoss than the k-means baseline for the evaluated dataset sizes. 
+The provenance-set semantic similarity combined with local recoding allowed LSH-RC to group semantically 
+coherent records into clusters that require less aggressive generalization, thereby reducing ILoss.
+
+The fllowing empirical patterns were observed:
+
 \begin{itemize}
-  \item What patterns or groups emerged?
-  \item Were the methods appropriate?
-  \item Any limitations or anomalies?
+  \item LSH-RC and k-means ILoss curves followed the same general trend.
+  \item At larger dataset sizes, LSH-RC achieved comparable ILoss with smaller variance, 
+  indicative of a more stable anonymization behavior. 
+  \item The higher number of intermediate micro-clusters in LSH-RC contributed positively to 
+  maintaining semantic locality within groups.
 \end{itemize}
+Overall, LSH-RC method delivers competent anonymization quality, although at a cost of much poorer runtime scalability.
+
+% Summarize the main results. Use figures/tables for clarity:
+% \begin{itemize}
+%   \item Cluster quality metrics (e.g., silhouette score)
+%   \item Feature importances
+%   \item Visualizations of clusters or decision boundaries
+% \end{itemize}
+
+% \subsection{Discussion}
+% Interpret the results:
+% \begin{itemize}
+%   \item What patterns or groups emerged?
+%   \item Were the methods appropriate?
+%   \item Any limitations or anomalies?
+% \end{itemize}
 
 % ------------------------------------------------
+\section{Discussion}
+
+The experiment revealed several important insights regarding the behavior as well the suitability 
+of LSH-RC for large-scale anonymization. 
+
+\subsection{Patterns and Group Behavior}
+\begin{itemize}
+  \item The LSH produced coarse partitions that often significantly differed in size, with 
+numerous very small clusters. This behavior is expected from MinHash-LSH because it 
+prioritizes similarity over size balance.
+
+  \item The recursive k-member agglomeration merged 
+these clusters into valid groups, but the heavy imbalance increased the number of merge 
+operations which then contributed to longer runtimes. 
+  \item The final anonymized clusters exhibited properties 
+of being semantically coherent, especially for attributes with strong categorical structure. 
+
+\end{itemize}
+
+\subsection{Appropriateness of Methods}
+
+The LSH-based approach is theoretically suitable for high-dimensional categorical data since 
+MinHash approximate Jaccard similarity efficiently, provenance-set-based distance well aligns 
+with taxonomy-based generalization, and that local recoding reduces unnecessary global 
+generalization. However, in practice, the method showed limited computational 
+efficiency and scalability on the adult dataset even after preprocessing. K-Means, 
+although less semantically grounded, offered substantially better execution times. 
+
+\subsection{Limitations}
+
+Limitations and anomalies that have emerged include:
+
+\begin{itemize}
+  % \item Parameter sensitivity: Parameters such as the number of hash bands (\α) 
+  % significantly influenced clustering granularity. Small parameter changes caused 
+  % large shifts in the number of β-clusters.
+  \item Increasing leftovers records: Some iterations produced more leftover (<k) 
+  clusters than expected, suggesting that provenance sets may be 
+  sparse for certain records.
+  \item Cluster fragmentation: For larger subsets, LSH produced many singletons, 
+  which then required multiple merge steps, inflating runtime.
+  \item Runtime instability: Execution time occasionally jumped sharply 
+  between nearby dataset sizes, likely due to hash collisions and varying \(\beta \)-cluster fragmentation.
+\end{itemize}
+These behaviours indicate that while semantically strong, the current implementation is 
+not suitable for and optimized for large-scale performance.
+
+
+
 \section{Conclusion and Reflection}
-Summarize what you found and learned:
+
+This project implemented and evaluated a complete LSH-based local recoding anonymization 
+pipeline using provenance-based semantic similarity, MinHash-LSH partitioning, and 
+recursive k-member clustering. Several conclusions and reflections emerged from the study.
+
+\subsection{Key Insights}
+
+The LSH-RC technique successfully produced k-anonymized clusters with low information loss, verifying its effectiveness at preserving data utility.
+MinHash-based partitioning enabled semantically meaningful grouping even in high-dimensional categorical spaces.
+Local recoding based on attribute taxonomies yielded less aggressive generalization than global methods.
+
+\subsection{Challenges Encountered}
+
 \begin{itemize}
-  \item Key insights from data mining
-  \item Challenges faced and how you overcame them
-  \item Potential future work or improvements
+  \item Scalability was the primary challenge: The recursive merging step became computationally expensive due to many small \(\beta \)-clusters and large cluster-size variance.
+  \item Parameter tuning for \(\alpha \) (number of hash bands) required iterative experimentation, as small changes had disproportionately large effects.
+  \item Implementing provenance-set representations and distance metrics required careful handling of categorical hierarchies and string normalization.
+  \item Debugging recursive clustering and generalization steps demanded detailed logging and validation.
+
 \end{itemize}
 
-% ------------------------------------------------
-\section*{Acknowledgements}
- (Optional) Acknowledge any data sources, collaborators, or funding.
+Despite these difficulties, the pipeline ultimately produced valid anonymization results comparable in quality to the k-means baseline.
 
+\section{Future Work}
+
+Several improvements could enhance this method significantly:
+
+\begin{itemize}
+  \item Parallelizing LSH and recursive clustering to reduce execution time.
+ \item Dynamic tuning of \(\alpha \) based on dataset characteristics rather than fixed values.
+\item Hybrid anonymization approaches: LSH for coarse partitioning and k-means or hierarchical clustering within \(\beta \)-clusters.
+\item Improved taxonomies to support richer semantic generalization.
+\item GPU-accelerated MinHash for fast signature computation at scale.
+  
+\end{itemize}
+Through the expansion of these techniques, LSH-RC could be made viable for true big-data environments.
+% Summarize what you found and learned:
+% \begin{itemize}
+%   \item Key insights from data mining
+%   \item Challenges faced and how you overcame them
+%   \item Potential future work or improvements
+% \end{itemize}
+
+% % ------------------------------------------------
 % ------------------------------------------------
 \bibliographystyle{abbrv}
 \bibliography{references}
