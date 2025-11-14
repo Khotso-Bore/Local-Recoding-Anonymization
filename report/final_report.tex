@@ -58,49 +58,48 @@ Learning Repository \cite{barry_becker_adult_1996}. It contains over 30000 recor
 relevant attributes including 8 quasi-identifiers and 2 numerical features implicitly discretised
 by the methodology.
 
-The analysis began with loading the Adult dataset consisting of 15 columns initially.
 
 \begin{itemize}
   \item Initial Data Count: The raw dataset had 32561 entries.
-  \item column dropping: Several columns were considered non-quasi-identifying or as non-sensitive 
-  like capital-gain, capital-loss, fnlwgt, education-num, and income; in order to focus on the key quasi-identifier(QI) 
-  attributes. 
-  \item Final Quasi identifiers set: The resulting dataset contained 10 columns consisting of 8 categorical 
-  attributes(workclass, education, marital-status, occupation, relationship, race, sex, native-country), 
-  and two numerical attributes(age, hours-per-week) as tabulated in table ~\ref{tab:dataset_overview} that would be discretized by the methodology. 
-  Work Class is used as the sensitive attribute. 
-  \item Missing Data: The initial inspection revealed missing data represented by a '?' string. These 
-  records were removed, reducing the total to 30162 clean records.
+  \item column dropping: The analysis began with loading the Adult dataset consisting of 15 columns initially. Several columns were considered non-quasi-identifying or as non-sensitive
+        like capital-gain, capital-loss, fnlwgt, education-num, and income; in order to focus on the key quasi-identifier(QI)
+        attributes.
+  \item Final Quasi identifiers set: The resulting dataset contained 10 columns consisting of 8 categorical
+        attributes(workclass, education, marital-status, occupation, relationship, race, sex, native-country),
+        and two numerical attributes(age, hours-per-week) as tabulated in table ~\ref{tab:dataset_overview} that would be discretized by the methodology.
+        Work Class is used as the sensitive attribute.
+  \item Missing Data: The initial inspection revealed missing data represented by a '?' string. These
+        records were removed, reducing the total to 30162 clean records.
 \end{itemize}
 
-The table features the quasi-identifier (QI) attributes used in the analysis, inclusive of their type and the 
-calculated percentage of missing values which are marked as '?' of which were removed during preprocessing. The 
-total rows removed due to missing values was 2399 out of 32561, resulting in a 7.37\% for features containing these entries. 
+The table features the quasi-identifier (QI) attributes used in the analysis, inclusive of their type and the
+calculated percentage of missing values which are marked as '?' of which were removed during preprocessing. The
+total rows removed due to missing values was 2399 out of 32561, resulting in a 7.37\% for features containing these entries.
 
 \begin{table}[h]
   \centering
   \caption{Dataset Overview \label{tab:dataset_overview}}
   \begin{tabular}{lcc}
     \hline
-    \textbf{Feature} & \textbf{Type} & \textbf{Missing (\%)} \\
+    \textbf{Feature}      & \textbf{Type}      & \textbf{Missing (\%)} \\
     \hline
-    \text{Age} & \text{Numerical} & 0.0 \\
-    \text{Workclass} & \text{Categorical} & 7.37 \\
-    \text{education} & \text{Categorical} & 0.0 \\
-    \text{marital-status} & \text{Categorical} & 0.0 \\
-    \text{occupation} & \text{Categorical} & 7.37 \\
-    \text{relationship} & \text{Categorical} & 0.0 \\
-    \text{race} & \text{Categorical} & 0.0 \\
-    \text{sex} & \text{Categorical} & 0.0 \\
-    \text{hours-per-week} & \text{Numerical} & 0.0 \\
-    \text{native-country} & \text{Categorical} & 7.37 \\
+    \text{Age}            & \text{Numerical}   & 0.0                   \\
+    \text{Workclass}      & \text{Categorical} & 7.37                  \\
+    \text{education}      & \text{Categorical} & 0.0                   \\
+    \text{marital-status} & \text{Categorical} & 0.0                   \\
+    \text{occupation}     & \text{Categorical} & 7.37                  \\
+    \text{relationship}   & \text{Categorical} & 0.0                   \\
+    \text{race}           & \text{Categorical} & 0.0                   \\
+    \text{sex}            & \text{Categorical} & 0.0                   \\
+    \text{hours-per-week} & \text{Numerical}   & 0.0                   \\
+    \text{native-country} & \text{Categorical} & 7.37                  \\
     \hline
   \end{tabular}
 \end{table}
 
 \subsection{Visualisations}
 
-Here are some key visualizations from the EDA phase. We explore the distributions of the numwerical features age and hours worked, and their correlations.
+Here are some key visualizations from the EDA phase. We explore the distributions of the numerical features age and hours worked, and their correlations.
 
 \begin{figure}[h]
   \centering
@@ -129,13 +128,13 @@ Here are some key visualizations from the EDA phase. We explore the distribution
 %   \item Early hypotheses about clusters or classes
 % \end{itemize}
 
-The correlation between age and hours worked suggests that while there may be slight 
-tendencies such as younger or older employees working somewhat more or fewer hours, the 
+The correlation between age and hours worked suggests that while there may be slight
+tendencies such as younger or older employees working somewhat more or fewer hours, the
 relationship is not strong or consistent across the group.
 
-A large portion of employees work standard full-time hours (around 40 hours per week), with 
-fewer employees working significantly more or less than this amount. This is highly likely due to 
-most records being from te=he United States, with a smaller representation from other countries. 
+A large portion of employees work standard full-time hours (around 40 hours per week), with
+fewer employees working significantly more or less than this amount. This is highly likely due to
+most records being from the United States, with a smaller representation from other countries.
 % ------------------------------------------------
 \section{Data Preprocessing}
 
@@ -246,25 +245,25 @@ Overall our results indicate that LSH-RC scales much less efficiently than k-mea
 \end{figure}
 
 
-The result growth was noticeably super-linear in execution time. In comparison, \textbf{k-means} scaled more smoothly 
-evident with an increased runtime that is almost linearly with dataset size, demonstrating significantly better computational 
+The result growth was noticeably super-linear in execution time. In comparison, \textbf{k-means} scaled more smoothly
+evident with an increased runtime that is almost linearly with dataset size, demonstrating significantly better computational
 efficiency.
 
 \subsubsection{\textbf{Information Loss}}
 
-Despite the higher computational cost, the LSH-RC method achieved similar and slightly lower 
-iLoss than the k-means baseline for the evaluated dataset sizes. 
-The provenance-set semantic similarity combined with local recoding allowed LSH-RC to group semantically 
+Despite the higher computational cost, the LSH-RC method achieved similar and slightly lower
+iLoss than the k-means baseline for the evaluated dataset sizes.
+The provenance-set semantic similarity combined with local recoding allowed LSH-RC to group semantically
 coherent records into clusters that require less aggressive generalization, thereby reducing ILoss.
 
 The following empirical patterns were observed:
 
 \begin{itemize}
   \item LSH-RC and k-means ILoss curves followed the same general trend.
-  \item At larger dataset sizes, LSH-RC achieved comparable ILoss with smaller variance, 
-  indicative of a more stable anonymization behavior. 
-  \item The higher number of intermediate micro-clusters in LSH-RC contributed positively to 
-  maintaining semantic locality within groups.
+  \item At larger dataset sizes, LSH-RC achieved comparable ILoss with smaller variance,
+        indicative of a more stable anonymization behavior.
+  \item The higher number of intermediate micro-clusters in LSH-RC contributed positively to
+        maintaining semantic locality within groups.
 \end{itemize}
 Overall, LSH-RC method delivers competent anonymization quality, although at a cost of much poorer runtime scalability.
 
@@ -288,31 +287,31 @@ Overall, LSH-RC method delivers competent anonymization quality, although at a c
 % ------------------------------------------------
 \section{Discussion}
 
-The experiment revealed several important insights regarding the behavior as well the suitability 
-of LSH-RC for large-scale anonymization. 
+The experiment revealed several important insights regarding the behavior as well the suitability
+of LSH-RC for large-scale anonymization.
 
 \subsection{Patterns and Group Behavior}
 \begin{itemize}
-  \item The LSH produced coarse partitions that often significantly differed in size, with 
-numerous very small clusters. This behavior is expected from MinHash-LSH because it 
-prioritizes similarity over size balance.
+  \item The LSH produced coarse partitions that often significantly differed in size, with
+        numerous very small clusters. This behavior is expected from MinHash-LSH because it
+        prioritizes similarity over size balance.
 
-  \item The recursive k-member agglomeration merged 
-these clusters into valid groups, but the heavy imbalance increased the number of merge 
-operations which then contributed to longer runtimes. 
-  \item The final anonymized clusters exhibited properties 
-of being semantically coherent, especially for attributes with strong categorical structure. 
+  \item The recursive k-member agglomeration merged
+        these clusters into valid groups, but the heavy imbalance increased the number of merge
+        operations which then contributed to longer runtimes.
+  \item The final anonymized clusters exhibited properties
+        of being semantically coherent, especially for attributes with strong categorical structure.
 
 \end{itemize}
 
 \subsection{Appropriateness of Methods}
 
-The LSH-based approach is theoretically suitable for high-dimensional categorical data since 
-MinHash approximate Jaccard similarity efficiently, provenance-set-based distance well aligns 
-with taxonomy-based generalization, and that local recoding reduces unnecessary global 
-generalization. However, in practice, the method showed limited computational 
-efficiency and scalability on the adult dataset even after preprocessing. K-Means, 
-although less semantically grounded, offered substantially better execution times. 
+The LSH-based approach is theoretically suitable for high-dimensional categorical data since
+MinHash approximate Jaccard similarity efficiently, provenance-set-based distance well aligns
+with taxonomy-based generalization, and that local recoding reduces unnecessary global
+generalization. However, in practice, the method showed limited computational
+efficiency and scalability on the adult dataset even after preprocessing. K-Means,
+although less semantically grounded, offered substantially better execution times.
 
 \subsection{Limitations}
 
@@ -323,22 +322,22 @@ Limitations and anomalies that have emerged include:
   % significantly influenced clustering granularity. Small parameter changes caused 
   % large shifts in the number of β-clusters.
   \item Increasing leftovers records: Some iterations produced more leftover (\textless k)
-  clusters than expected, suggesting that provenance sets may be 
-  sparse for certain records.
-  \item Cluster fragmentation: For larger subsets, LSH produced many singletons, 
-  which then required multiple merge steps, inflating runtime.
-  \item Runtime instability: Execution time occasionally jumped sharply 
-  between nearby dataset sizes, likely due to hash collisions and varying \(\beta \)-cluster fragmentation.
+        clusters than expected, suggesting that provenance sets may be
+        sparse for certain records.
+  \item Cluster fragmentation: For larger subsets, LSH produced many singletons,
+        which then required multiple merge steps, inflating runtime.
+  \item Runtime instability: Execution time occasionally jumped sharply
+        between nearby dataset sizes, likely due to hash collisions and varying \(\beta \)-cluster fragmentation.
 \end{itemize}
-These behaviours indicate that while semantically strong, the current implementation is 
+These behaviours indicate that while semantically strong, the current implementation is
 not suitable for and optimized for large-scale performance.
 
 
 
 \section{Conclusion and Reflection}
 
-This project implemented and evaluated a complete LSH-based local recoding anonymization 
-pipeline using provenance-based semantic similarity, MinHash-LSH partitioning, and 
+This project implemented and evaluated a complete LSH-based local recoding anonymization
+pipeline using provenance-based semantic similarity, MinHash-LSH partitioning, and
 recursive k-member clustering. Several conclusions and reflections emerged from the study.
 
 \subsection{Key Insights}
@@ -365,11 +364,11 @@ Several improvements could enhance this method significantly:
 
 \begin{itemize}
   \item Parallelizing LSH and recursive clustering to reduce execution time.
- \item Dynamic tuning of \(\alpha \) based on dataset characteristics rather than fixed values.
-\item Hybrid anonymization approaches: LSH for coarse partitioning and k-means or hierarchical clustering within \(\beta \)-clusters.
-\item Improved taxonomies to support richer semantic generalization.
-\item GPU-accelerated MinHash for fast signature computation at scale.
-  
+  \item Dynamic tuning of \(\alpha \) based on dataset characteristics rather than fixed values.
+  \item Hybrid anonymization approaches: LSH for coarse partitioning and k-means or hierarchical clustering within \(\beta \)-clusters.
+  \item Improved taxonomies to support richer semantic generalization.
+  \item GPU-accelerated MinHash for fast signature computation at scale.
+
 \end{itemize}
 Through the expansion of these techniques, LSH-RC could be made viable for true big-data environments.
 % Summarize what you found and learned:
