@@ -257,7 +257,7 @@ iLoss than the k-means baseline for the evaluated dataset sizes.
 The provenance-set semantic similarity combined with local recoding allowed LSH-RC to group semantically 
 coherent records into clusters that require less aggressive generalization, thereby reducing ILoss.
 
-The fllowing empirical patterns were observed:
+The following empirical patterns were observed:
 
 \begin{itemize}
   \item LSH-RC and k-means ILoss curves followed the same general trend.
@@ -322,7 +322,7 @@ Limitations and anomalies that have emerged include:
   % \item Parameter sensitivity: Parameters such as the number of hash bands (\α) 
   % significantly influenced clustering granularity. Small parameter changes caused 
   % large shifts in the number of β-clusters.
-  \item Increasing leftovers records: Some iterations produced more leftover (<k) 
+  \item Increasing leftovers records: Some iterations produced more leftover (\textless k)
   clusters than expected, suggesting that provenance sets may be 
   sparse for certain records.
   \item Cluster fragmentation: For larger subsets, LSH produced many singletons, 
